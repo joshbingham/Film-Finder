@@ -96,11 +96,40 @@ const displayMovie = (movieInfo) => {
     const moviePoster = createMoviePoster(movieInfo.poster_path);
     const titleHeader = createMovieTitle(movieInfo.title);
     const overviewText = createMovieOverview(movieInfo.overview);
+    const rating = createMovieRating(movieInfo.vote_average);
+    const cast = createMovieCast(movieInfo.credits);
+    
+
+    // Create HTML for movie rating
+    const createMovieRating = (rating) => {
+        const ratingParagraph = document.createElement('p');
+        ratingParagraph.setAttribute('id', 'movieRating');
+        ratingParagraph.innerHTML = `⭐ Rating: ${rating.toFixed(1)} / 10`;
+        return ratingParagraph;
+    }
+
+    // Create HTML for top cast
+    const createMovieCast = (credits) => {
+        const castParagraph = document.createElement('p');
+        castParagraph.setAttribute('id', 'movieCast');
+
+        // If no credits or cast information 
+        if (!credits || !credits.cast) {
+            castParagraph.textContent = "Cast information is not available";
+            return castParagraph;
+        }
+
+        const topCast = credits.cast.slice(0, 5).map(actor => actor.name).join(', ');
+        castParagraph.innerHTML = `🎭 Cast: ${topCast}`;
+        return castParagraph;
+    }
   
-    // Append title, poster, and overview to page
+    // Append title, poster, overview, rating and top 5 cast
     moviePosterDiv.appendChild(moviePoster);
     movieTextDiv.appendChild(titleHeader);
     movieTextDiv.appendChild(overviewText);
+    movieTextDiv.appendChild(rating);
+    movieTextDiv.appendChild(cast);
   
     showBtns();
     likeBtn.onclick = likeMovie;
