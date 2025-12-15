@@ -95,3 +95,29 @@ select {
     background-color: #c74a4a;
     color: #910000;
 }
+
+/* Mobile responsive design */
+
+@media (max-width: 768px) {
+
+  #moviePoster,
+  #movieText {
+    width: 100%;
+    float: none;
+  }
+
+  #movieInfo {
+    width: 90%;
+  }
+
+  #movieTitle {
+    font-size: 28px;
+    padding: 16px;
+  }
+
+  #movieOverview {
+    padding: 16px;
+    font-size: 16px;
+  }
+
+}
