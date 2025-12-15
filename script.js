@@ -38,17 +38,18 @@ const getMovies = async () => {
 
 const getMovieInfo = async (movie) => {
     const movieId = movie.id;
-    const movieEndpoint = `/movie/${movieId}`;
-    const requestParams = `?api_key=${tmdbKey}`;
-    const urlToFetch = `${tmdbBaseUrl}${movieEndpoint}${requestParams}`;
+    const urlToFetch = `/api/movie?id=${movieId}`;
+
     try {
         const response = await fetch(urlToFetch);
         if (response.ok) {
             const movieInfo = await response.json();
             return movieInfo;
+        } else {
+            console.error('Error fetching movie info:', response.status);
         }
     } catch (error) {
-        console.log(error);
+        console.error('Network error:', error);
     }
 };
 
