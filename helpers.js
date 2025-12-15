@@ -30,8 +30,15 @@ const clearCurrentMovie = () => {
     movieTextDiv.innerHTML = '';
 }
 
-// After liking a movie, clears the current movie from the screen and gets another random movie
+// After liking a movie, saves it to local storage, clears the current movie from the screen, and gets another random movie
 const likeMovie = () => {
+    const likedMovies = getLikedMovies();
+
+    // Avoid duplicate likes
+    if (!likedMovies.find(movie => movie.id === currentMovie.id)) {
+        likedMovies.push(currentMovie);
+        saveLikedMovies(likedMovies);
+    }
     clearCurrentMovie();
     showRandomMovie();
 };
@@ -98,4 +105,13 @@ const displayMovie = (movieInfo) => {
     showBtns();
     likeBtn.onclick = likeMovie;
     dislikeBtn.onclick = dislikeMovie;
+};
+
+const getLikedMovies = () => {
+    const liked = localStorage.getItem('likedMovies');
+    return liked ? JSON.parse(liked) : [];
+};
+
+const saveLikedMovies = (movies) => {
+    localStorage.setItem('likedMovies', JSON.stringify(movies));
 };

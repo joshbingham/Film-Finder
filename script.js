@@ -1,3 +1,4 @@
+let currentMovie = null;
 const tmdbBaseUrl = 'https://api.themoviedb.org/3';
 const playBtn = document.getElementById('playBtn');
 
@@ -62,6 +63,7 @@ const showRandomMovie = async () => {
 const movies = await getMovies();
 const randomMovie = getRandomMovie(movies);
 const info = await getMovieInfo(randomMovie);
+currentMovie = info;
 displayMovie(info);
 };
 
