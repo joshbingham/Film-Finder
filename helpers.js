@@ -85,22 +85,7 @@ const getRandomMovie = (movies) => {
     return randomMovie;
 };
 
-// Uses the DOM to create HTML to display the movie
-const displayMovie = (movieInfo) => {
-    const moviePosterDiv = document.getElementById('moviePoster');
-    const movieTextDiv = document.getElementById('movieText');
-    const likeBtn = document.getElementById('likeBtn');
-    const dislikeBtn = document.getElementById('dislikeBtn');
-  
-    // Create HTML content containing movie info
-    const moviePoster = createMoviePoster(movieInfo.poster_path);
-    const titleHeader = createMovieTitle(movieInfo.title);
-    const overviewText = createMovieOverview(movieInfo.overview);
-    const rating = createMovieRating(movieInfo.vote_average);
-    const cast = createMovieCast(movieInfo.credits);
-    
-
-    // Create HTML for movie rating
+// Create HTML for movie rating
     const createMovieRating = (rating) => {
         const ratingParagraph = document.createElement('p');
         ratingParagraph.setAttribute('id', 'movieRating');
@@ -122,7 +107,24 @@ const displayMovie = (movieInfo) => {
         const topCast = credits.cast.slice(0, 5).map(actor => actor.name).join(', ');
         castParagraph.innerHTML = `🎭 Cast: ${topCast}`;
         return castParagraph;
-    }
+    };
+
+// Uses the DOM to create HTML to display the movie
+const displayMovie = (movieInfo) => {
+    const moviePosterDiv = document.getElementById('moviePoster');
+    const movieTextDiv = document.getElementById('movieText');
+    const likeBtn = document.getElementById('likeBtn');
+    const dislikeBtn = document.getElementById('dislikeBtn');
+  
+    // Create HTML content containing movie info
+    const moviePoster = createMoviePoster(movieInfo.poster_path);
+    const titleHeader = createMovieTitle(movieInfo.title);
+    const overviewText = createMovieOverview(movieInfo.overview);
+    const rating = createMovieRating(movieInfo.vote_average);
+    const cast = createMovieCast(movieInfo.credits);
+    
+
+    
   
     // Append title, poster, overview, rating and top 5 cast
     moviePosterDiv.appendChild(moviePoster);
