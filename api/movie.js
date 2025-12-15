@@ -1,5 +1,3 @@
-import fetch from 'node-fetch';
-
 export default async function handler(req, res) {
   const movieId = req.query.id; // ?id=XXX
   const tmdbKey = process.env.TMDB_KEY;

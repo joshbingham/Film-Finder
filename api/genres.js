@@ -1,5 +1,3 @@
-import fetch from 'node-fetch'; // only needed for Node runtime
-
 export default async function handler(req, res) {
   const tmdbKey = process.env.TMDB_KEY;
   if (!tmdbKey) return res.status(500).json({ error: 'TMDB key not set' });
