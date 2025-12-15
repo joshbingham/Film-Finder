@@ -123,15 +123,13 @@ const displayMovie = (movieInfo) => {
     const rating = createMovieRating(movieInfo.vote_average);
     const cast = createMovieCast(movieInfo.credits);
     
-
-    
-  
     // Append title, poster, overview, rating and top 5 cast
     moviePosterDiv.appendChild(moviePoster);
     movieTextDiv.appendChild(titleHeader);
-    movieTextDiv.appendChild(overviewText);
     movieTextDiv.appendChild(rating);
     movieTextDiv.appendChild(cast);
+    movieTextDiv.appendChild(overviewText);
+    
   
     showBtns();
     likeBtn.onclick = likeMovie;

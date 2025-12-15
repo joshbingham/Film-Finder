@@ -47,7 +47,7 @@ img#moviePoster {
     line-height: 1.25;
 }
 
-#movieTitle, #movieOverview {
+#movieTitle, #movieOverview, #movieRating, #movieCast {
     padding:  32px;
 }
 
@@ -115,7 +115,7 @@ select {
     padding: 16px;
   }
 
-  #movieOverview {
+  #movieOverview, #movieRating, #movieCast {
     padding: 16px;
     font-size: 16px;
   }
