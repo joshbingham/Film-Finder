@@ -2,37 +2,37 @@ const tmdbBaseUrl = 'https://api.themoviedb.org/3';
 const playBtn = document.getElementById('playBtn');
 
 const getGenres = async () => {
-    const genreRequestEndpoint = `/genre/movie/list`;
-    const requestParams = `?api_key=${tmdbKey}`;
-    const urlToFetch = `${tmdbBaseUrl}${genreRequestEndpoint}${requestParams}`;
+    const urlToFetch = `/api/genres`;
     try {
         const response = await fetch(urlToFetch);
         if (response.ok) {
             const jsonResponse = await response.json();
             const genres = jsonResponse.genres;
             return genres;
-        } 
+        } else {
+            console.error('Error fetching genres:', response.status);
+        }
     } catch (error) {
-        console.log(error);
+        console.error('Network error:', error);
     }
-    
 };
 
 
 const getMovies = async () => {
   const selectedGenre = getSelectedGenre();
-  const discoverMovieEndpoint = `/discover/movie`;
-  const requestParams = `?api_key=${tmdbKey}&with_genres=${selectedGenre}`;
-  const urlToFetch = `${tmdbBaseUrl}${discoverMovieEndpoint}${requestParams}`;
+  const urlToFetch = `/api/tmdb?genre=${selectedGenre}`;
+
   try {
     const response = await fetch(urlToFetch);
     if (response.ok) {
       const jsonResponse = await response.json();
       const movies = jsonResponse.results;
       return movies;
+    } else {
+      console.error('Error fetching movies:', response.status);
     }
 } catch (error) {
-    console.log(error);
+    console.error('Network error:', error);
   }
 };
 
