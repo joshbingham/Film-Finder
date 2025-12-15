@@ -36,7 +36,7 @@ const likeMovie = () => {
 
     // Avoid duplicate likes
     if (!likedMovies.find(movie => movie.id === currentMovie.id)) {
-        likedMovies.push(currentMovie);
+        likedMovies.push(formatMovieForStorage(currentMovie));
         saveLikedMovies(likedMovies);
     }
     clearCurrentMovie();
@@ -115,3 +115,12 @@ const getLikedMovies = () => {
 const saveLikedMovies = (movies) => {
     localStorage.setItem('likedMovies', JSON.stringify(movies));
 };
+
+const formatMovieForStorage = (movie) => ({
+  id: movie.id,
+  title: movie.title,
+  poster_path: movie.poster_path,
+  overview: movie.overview,
+  release_date: movie.release_date,
+  vote_average: movie.vote_average
+});
