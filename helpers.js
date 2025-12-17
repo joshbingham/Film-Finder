@@ -16,6 +16,11 @@ const getSelectedGenre = () => {
     return selectedGenre;
 };
 
+// Read selected date filter from dropdown menu
+const getSelectedDateFilter = () => {
+    return document.getElementById('dateFilter').value;
+};
+
 // Displays the like and dislike buttons on the page
 const showBtns = () => {
     const btnDiv = document.getElementById('likeOrDislikeBtns');
