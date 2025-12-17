@@ -23,7 +23,7 @@ const getMovies = async () => {
   const selectedGenre = getSelectedGenre();
   const dateFilter = getSelectedDateFilter();
 
-  const urlToFetch = `/api/tmdb?genre=${selectedGenre}`;
+  let urlToFetch = `/api/tmdb?genre=${selectedGenre}`;
    
   // Append date filter if not 'random'
   if (dateFilter !== 'random') {
