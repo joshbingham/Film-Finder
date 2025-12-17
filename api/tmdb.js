@@ -1,5 +1,6 @@
 export default async function handler(req, res) {
   const genre = req.query.genre || '';
+  const days = req.query.days;
   const tmdbKey = process.env.TMDB_KEY;
 
   if (!tmdbKey) {
