@@ -21,6 +21,16 @@
       <label>Choose a genre:</label>
       <select name="genres" id="genres">
       </select>
+
+      <label>Release window:</label>
+      <select name="dateFilter" id="dateFilter">
+        <option value="random">Any time (random)</option>
+        <option value="7">Last week</option>
+        <option value="30">Last month</option>
+        <option value="90">Last 3 months</option>
+        <option value="180">Last 6 months</option>
+        <option value="365">Last year</option>
+      </select>
     </form>
     <button id="playBtn">Let's Play!</button>
     <div id="movieInfo">
