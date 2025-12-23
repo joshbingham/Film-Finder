@@ -11,6 +11,16 @@ h1 {
     font-size: 80px;
 }
 
+a {
+    text-align: center;
+    margin: 0px auto;
+    display: block;
+    font-family: 'Fredoka One', sans-serif;
+    text-decoration: none;
+    cursor: pointer;
+    color: #fdc238;
+}
+
 #genreForm, #playBtn {
     text-align: center;
     margin: 0px auto;
