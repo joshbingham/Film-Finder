@@ -1,49 +1,111 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Film Finder</title>
+    <title>Film Finder | Data-Driven Movie Discovery</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400&family=Fredoka+One&family=Questrial&family=Staatliches&display=swap" rel="stylesheet">
+    <meta
+      name="description"
+      content="A data-driven movie discovery tool using filters, recommendations, and saved preferences."
+    >
+
     <link rel="stylesheet" href="style.css">
+
     <script defer src="https://kit.fontawesome.com/e918d10e90.js" crossorigin="anonymous"></script>
-    <!-- <script defer src="public/config.js"></script> -->
     <script defer src="helpers.js"></script>
     <script defer src="script.js"></script>
   </head>
+
   <body>
-    <header>
-      <h1>🍿Film Finder🍿</h1>
+    <header class="app-header">
+      <p class="eyebrow">API-driven discovery tool</p>
+
+      <h1>Film Finder</h1>
+
+      <p class="hero-copy">
+        Discover films through genre filters, release windows, recommendation data,
+        and a saved shortlist.
+      </p>
+
+      <div class="workflow-steps" aria-label="Film Finder workflow">
+        <span>Choose preferences</span>
+        <span>Review recommendation</span>
+        <span>Save your shortlist</span>
+      </div>
     </header>
-    <form id="genreForm">
-      <label>Choose a genre:</label>
-      <select name="genres" id="genres">
-      </select>
 
-      <label>Release window:</label>
-      <select name="dateFilter" id="dateFilter">
-        <option value="random">Any time (random)</option>
-        <option value="7">Last week</option>
-        <option value="30">Last month</option>
-        <option value="90">Last 3 months</option>
-        <option value="180">Last 6 months</option>
-        <option value="365">Last year</option>
-      </select>
-    </form>
+    <main class="app-shell">
+      <section class="controls-card" aria-labelledby="controls-heading">
+        <div class="section-heading">
+          <h2 id="controls-heading">Find a recommendation</h2>
+          <p>
+            Select a genre and release window to generate a movie recommendation
+            from TMDB data.
+          </p>
+        </div>
 
-    <button id="playBtn">Let's Play!</button>
+        <form id="genreForm" class="filter-form">
+          <div class="form-field">
+            <label for="genres">Genre</label>
+            <select name="genres" id="genres">
+            </select>
+          </div>
 
-    <div id="movieInfo">
-      <div id="moviePoster"></div>
-      <div id="movieText"></div>
-    </div>
-    <div id="likeOrDislikeBtns" hidden>
-      <button id="likeBtn"><i class="fa-solid fa-thumbs-up"></i></button>
-      <button id="dislikeBtn"><i class="fa-solid fa-thumbs-down"></i></button>
-    </div>
-    <!-- Liked Movies link -->
-    <a href="liked-movies.html">❤️ View Liked Movies</a>
+          <div class="form-field">
+            <label for="dateFilter">Release window</label>
+            <select name="dateFilter" id="dateFilter">
+              <option value="random">Any time</option>
+              <option value="7">Last week</option>
+              <option value="30">Last month</option>
+              <option value="90">Last 3 months</option>
+              <option value="180">Last 6 months</option>
+              <option value="365">Last year</option>
+            </select>
+          </div>
+        </form>
+
+        <button id="playBtn" class="primary-action" type="button">
+          Get Recommendation
+        </button>
+      </section>
+
+      <section class="movie-panel" aria-live="polite">
+        <div id="movieInfo" class="movie-card">
+          <div id="moviePoster" class="movie-poster"></div>
+
+          <div id="movieText" class="movie-text">
+            <p class="empty-state">
+              Choose your filters and generate a recommendation to start building
+              your shortlist.
+            </p>
+          </div>
+        </div>
+
+        <div id="likeOrDislikeBtns" class="decision-actions" hidden>
+          <button id="likeBtn" class="decision-button save" type="button">
+            <i class="fa-solid fa-thumbs-up"></i>
+            Save film
+          </button>
+
+          <button id="dislikeBtn" class="decision-button skip" type="button">
+            <i class="fa-solid fa-thumbs-down"></i>
+            Skip
+          </button>
+        </div>
+      </section>
+
+      <section class="saved-link-card">
+        <div>
+          <h2>Saved films</h2>
+          <p>
+            Review the films you have shortlisted using persistent browser storage.
+          </p>
+        </div>
+
+        <a class="secondary-action" href="liked-movies.html">
+          View Saved Films
+        </a>
+      </section>
+    </main>
   </body>
 </html>

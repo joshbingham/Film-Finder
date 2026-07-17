@@ -1,143 +1,350 @@
-body {
-    background-color: #7f0920;
-    color: #0a0408;
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
 
-h1 {
-    text-align: center;
-    margin: 0px auto;
-    display: block;
-    font-family: 'Staatliches', sans-serif;
-    font-size: 80px;
+:root {
+  --background: #0A1A2F;
+  --surface: #1E293B;
+  --surface-dark: #0F172A;
+  --text: #E2E8F0;
+  --text-soft: #CBD5E1;
+  --text-muted: #94A3B8;
+  --accent: #3B82F6;
+  --accent-light: #38BDF8;
+  --accent-soft: rgba(59, 130, 246, 0.12);
+  --border: rgba(255, 255, 255, 0.08);
+  --success: #22C55E;
+  --danger: #EF4444;
+}
+
+body {
+  min-height: 100vh;
+  margin: 0;
+  padding: 2rem;
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  line-height: 1.6;
+  background:
+    radial-gradient(circle at top left, rgba(59, 130, 246, 0.18), transparent 35%),
+    var(--background);
+  color: var(--text);
 }
 
 a {
-    text-align: center;
-    margin: 0px auto;
-    display: block;
-    font-family: 'Fredoka One', sans-serif;
-    text-decoration: none;
-    cursor: pointer;
-    color: #fdc238;
+  color: var(--accent-light);
+  text-decoration: none;
 }
 
-#genreForm, #playBtn {
-    text-align: center;
-    margin: 0px auto;
-    display: block;
-    font-family: 'Fredoka One', sans-serif;
+a:hover {
+  text-decoration: underline;
 }
 
-#movieInfo {
-    width:  65%;
-    margin:  32px auto;
+button,
+select {
+  font: inherit;
 }
 
-#movieInfo:after {
-    content:  "";
-    display:  table;
-    clear:  both;
+.app-header,
+.app-shell {
+  width: min(100%, 960px);
+  margin: 0 auto;
 }
 
-#moviePoster, #movieText {
-    width:  50%;
-    float:  left;
+.app-header {
+  padding: 3rem 2rem;
+  text-align: center;
 }
 
-img#moviePoster {
-    width:  100%;
-    height:  auto;
-    display:  block;
-    margin:  auto;
+.eyebrow {
+  margin: 0 0 0.75rem;
+  color: #60A5FA;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
-#movieText {
-    font-family: 'Questrial';
-    color: #FEFBEA;
-    line-height: 1.25;
+.app-header h1 {
+  margin: 0;
+  color: #F8FAFC;
+  font-size: clamp(2.7rem, 7vw, 5rem);
+  line-height: 0.95;
+  letter-spacing: -0.06em;
 }
 
-#movieTitle, #movieOverview, #movieRating, #movieCast {
-    padding:  32px;
+.hero-copy {
+  max-width: 680px;
+  margin: 1.25rem auto 0;
+  color: var(--text-soft);
+  font-size: clamp(1.05rem, 2vw, 1.2rem);
 }
 
-#playBtn {
-    margin-top: 20px;
-    font-size: 25px;
-    padding: 7px 10px;
-    border-radius: 10px;
-    border-style: none;
-    background-color: #B97828;
-    color: #fdc238;
-    cursor:  pointer;
+.workflow-steps {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1.75rem;
+}
+
+.workflow-steps span {
+  color: #BFDBFE;
+  background-color: var(--accent-soft);
+  border: 1px solid rgba(59, 130, 246, 0.25);
+  border-radius: 999px;
+  padding: 0.48rem 0.85rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.app-shell {
+  background-color: rgba(30, 41, 59, 0.92);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.22);
+  padding: 2rem;
+}
+
+.controls-card,
+.movie-card,
+.saved-link-card {
+  background-color: var(--surface-dark);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+}
+
+.controls-card {
+  padding: 1.75rem;
+  text-align: center;
+}
+
+.section-heading h2,
+.saved-link-card h2 {
+  margin: 0;
+  color: #F8FAFC;
+  font-size: 1.45rem;
+  letter-spacing: -0.03em;
+}
+
+.section-heading p,
+.saved-link-card p {
+  max-width: 620px;
+  margin: 0.65rem auto 0;
+  color: var(--text-muted);
+}
+
+.filter-form {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  margin: 1.5rem auto 0;
+  max-width: 680px;
+}
+
+.form-field {
+  text-align: left;
 }
 
 label {
-    display: block;
-    font-size: 35px;
-    margin-bottom: 5px;
+  display: block;
+  margin-bottom: 0.45rem;
+  color: #F8FAFC;
+  font-size: 0.9rem;
+  font-weight: 700;
 }
 
 select {
-    width: 100%;
-    max-width: 320px;
-    padding: 12px 16px;
-    margin-bottom: 30px;
-    font-size: 18px;
-    border-radius: 10px;
-    border: none;
-    outline: none;
-    font-family: 'Fredoka One', sans-serif;
-    background-color: #FEFBEA;
-    color: #0a0408;
-    cursor: pointer;
+  width: 100%;
+  border: 1px solid rgba(148, 163, 184, 0.22);
+  border-radius: 12px;
+  outline: none;
+  background-color: #020617;
+  color: var(--text);
+  padding: 0.82rem 0.9rem;
+  cursor: pointer;
 }
 
-#likeOrDislikeBtns {
-    text-align: center;
-    margin: 0px auto;  
+select:focus {
+  border-color: rgba(56, 189, 248, 0.75);
+  box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.12);
 }
 
-#likeBtn, #dislikeBtn {
-    padding: 15px 25px;
-    font-size: 25px;
-    border-radius: 12px;
-    border-style: none;
-    cursor:  pointer;
+.primary-action,
+.secondary-action,
+.decision-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  border: 0;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 700;
+  transition: transform 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
 }
 
-#likeBtn {
-    background-color: #249e57;
-    color: darkgreen;
+.primary-action {
+  margin-top: 1.5rem;
+  background-color: var(--accent);
+  color: white;
+  padding: 0.85rem 1.2rem;
 }
 
-#dislikeBtn {
-    background-color: #c74a4a;
-    color: #910000;
+.primary-action:hover,
+.secondary-action:hover,
+.decision-button:hover {
+  transform: translateY(-2px);
+  text-decoration: none;
 }
 
-/* Mobile responsive design */
+.primary-action:hover {
+  background-color: #2563EB;
+}
+
+.movie-panel {
+  margin-top: 1.5rem;
+}
+
+.movie-card {
+  display: grid;
+  grid-template-columns: minmax(220px, 0.9fr) minmax(0, 1.4fr);
+  min-height: 320px;
+  overflow: hidden;
+}
+
+.movie-poster {
+  background:
+    linear-gradient(135deg, rgba(59, 130, 246, 0.12), rgba(56, 189, 248, 0.08)),
+    #020617;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.movie-poster img {
+  width: 100%;
+  height: 100%;
+  max-height: 520px;
+  object-fit: cover;
+  display: block;
+}
+
+.movie-text {
+  padding: 1.75rem;
+  text-align: left;
+}
+
+.empty-state {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 1.05rem;
+}
+
+#movieTitle {
+  margin: 0 0 0.8rem;
+  color: #F8FAFC;
+  font-size: clamp(1.8rem, 4vw, 2.65rem);
+  line-height: 1.05;
+  letter-spacing: -0.045em;
+}
+
+#movieOverview,
+#movieRating,
+#movieCast {
+  margin: 0 0 1rem;
+  color: var(--text-soft);
+}
+
+#movieRating,
+#movieCast {
+  color: #BFDBFE;
+  font-weight: 600;
+}
+
+.decision-actions {
+  display: flex;
+  justify-content: center;
+  gap: 0.9rem;
+  margin-top: 1rem;
+}
+
+.decision-button {
+  padding: 0.72rem 1rem;
+  color: white;
+}
+
+.decision-button.save {
+  background-color: rgba(34, 197, 94, 0.16);
+  border: 1px solid rgba(34, 197, 94, 0.35);
+  color: #BBF7D0;
+}
+
+.decision-button.skip {
+  background-color: rgba(239, 68, 68, 0.14);
+  border: 1px solid rgba(239, 68, 68, 0.35);
+  color: #FECACA;
+}
+
+.saved-link-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.25rem;
+  margin-top: 1.5rem;
+  padding: 1.5rem;
+  text-align: left;
+}
+
+.saved-link-card p {
+  margin-left: 0;
+}
+
+.secondary-action {
+  flex: 0 0 auto;
+  background-color: rgba(59, 130, 246, 0.1);
+  color: #BFDBFE;
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  padding: 0.72rem 1rem;
+}
+
+.secondary-action:hover {
+  background-color: rgba(59, 130, 246, 0.18);
+  border-color: rgba(59, 130, 246, 0.5);
+}
 
 @media (max-width: 768px) {
+  body {
+    padding: 1rem;
+  }
 
-  #moviePoster,
-  #movieText {
+  .app-header {
+    padding: 2.2rem 0.5rem;
+  }
+
+  .app-shell {
+    padding: 1rem;
+  }
+
+  .filter-form,
+  .movie-card {
+    grid-template-columns: 1fr;
+  }
+
+  .movie-poster img {
+    max-height: none;
+  }
+
+  .saved-link-card {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .decision-actions {
+    flex-direction: column;
+  }
+
+  .decision-button {
     width: 100%;
-    float: none;
   }
-
-  #movieInfo {
-    width: 90%;
-  }
-
-  #movieTitle {
-    font-size: 28px;
-    padding: 16px;
-  }
-
-  #movieOverview, #movieRating, #movieCast {
-    padding: 16px;
-    font-size: 16px;
-  }
-
 }
