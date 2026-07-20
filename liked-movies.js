@@ -12,6 +12,15 @@ const preferenceProfilePanel = document.getElementById('preferenceProfilePanel')
 const preferenceProfileSummary = document.getElementById('preferenceProfileSummary');
 const topGenresList = document.getElementById('topGenresList');
 
+const bestNextWatchPanel = document.getElementById('bestNextWatchPanel');
+const bestNextWatchTitle = document.getElementById('bestNextWatchTitle');
+const bestNextWatchReason = document.getElementById('bestNextWatchReason');
+const bestNextWatchMeta = document.getElementById('bestNextWatchMeta');
+
+const savedControlsPanel = document.getElementById('savedControlsPanel');
+const savedSort = document.getElementById('savedSort');
+const savedFilter = document.getElementById('savedFilter');
+
 const genreNameMap = {
   28: 'Action',
   12: 'Adventure',
@@ -92,6 +101,34 @@ const formatSavedDate = (savedAt) => {
   });
 };
 
+const getSavedTime = (savedAt) => {
+  if (!savedAt) {
+    return 0;
+  }
+
+  const time = new Date(savedAt).getTime();
+
+  return Number.isNaN(time) ? 0 : time;
+};
+
+const getReleaseYearNumber = (releaseDate) => {
+  if (!releaseDate) {
+    return 0;
+  }
+
+  const year = new Date(releaseDate).getFullYear();
+
+  return Number.isNaN(year) ? 0 : year;
+};
+
+const getMovieMatchScore = (movie) => {
+  return typeof movie.match_score === 'number' ? movie.match_score : 0;
+};
+
+const getMovieRating = (movie) => {
+  return typeof movie.vote_average === 'number' ? movie.vote_average : 0;
+};
+
 const getGenreName = (genreId) => {
   return genreNameMap[genreId] || 'Unknown genre';
 };
@@ -144,6 +181,109 @@ const calculateSavedInsights = (movies) => {
     topGenres: genreCounts.slice(0, 4),
     strongestMatch,
   };
+};
+
+const filterSavedMovies = (movies, insights) => {
+  const selectedFilter = savedFilter?.value || 'all';
+
+  if (selectedFilter === 'top-genre') {
+    if (!insights.topGenre) {
+      return [];
+    }
+
+    return movies.filter((movie) => {
+      return Array.isArray(movie.genre_ids) && movie.genre_ids.includes(insights.topGenre.id);
+    });
+  }
+
+  if (selectedFilter === 'rating-7') {
+    return movies.filter((movie) => getMovieRating(movie) >= 7);
+  }
+
+  if (selectedFilter === 'match-80') {
+    return movies.filter((movie) => getMovieMatchScore(movie) >= 80);
+  }
+
+  return movies;
+};
+
+const sortSavedMovies = (movies) => {
+  const selectedSort = savedSort?.value || 'saved-desc';
+
+  return [...movies].sort((a, b) => {
+    if (selectedSort === 'match-desc') {
+      return getMovieMatchScore(b) - getMovieMatchScore(a);
+    }
+
+    if (selectedSort === 'rating-desc') {
+      return getMovieRating(b) - getMovieRating(a);
+    }
+
+    if (selectedSort === 'release-desc') {
+      return getReleaseYearNumber(b.release_date) - getReleaseYearNumber(a.release_date);
+    }
+
+    if (selectedSort === 'title-asc') {
+      return (a.title || '').localeCompare(b.title || '');
+    }
+
+    return getSavedTime(b.saved_at) - getSavedTime(a.saved_at);
+  });
+};
+
+const getControlledSavedMovies = (movies, insights) => {
+  const filteredMovies = filterSavedMovies(movies, insights);
+
+  return sortSavedMovies(filteredMovies);
+};
+
+const getBestNextWatchReason = (movie) => {
+  const reasons = [];
+
+  if (getMovieMatchScore(movie) >= 80) {
+    reasons.push('high match score');
+  }
+
+  if (getMovieRating(movie) >= 7) {
+    reasons.push('strong rating');
+  }
+
+  if (Array.isArray(movie.match_reasons) && movie.match_reasons.length > 0) {
+    reasons.push('clear recommendation reasons');
+  }
+
+  if (reasons.length === 0) {
+    return 'Selected as the strongest option from your current shortlist view.';
+  }
+
+  return `Selected because it has ${reasons.join(', ')}.`;
+};
+
+const updateBestNextWatch = (movies) => {
+  if (movies.length === 0) {
+    bestNextWatchPanel.hidden = true;
+    bestNextWatchTitle.textContent = 'Your strongest saved option will appear here.';
+    bestNextWatchReason.textContent = 'Save films to compare your shortlist.';
+    bestNextWatchMeta.textContent = '—';
+    return;
+  }
+
+  const bestMovie = [...movies].sort((a, b) => {
+    const matchDifference = getMovieMatchScore(b) - getMovieMatchScore(a);
+
+    if (matchDifference !== 0) {
+      return matchDifference;
+    }
+
+    return getMovieRating(b) - getMovieRating(a);
+  })[0];
+
+  bestNextWatchPanel.hidden = false;
+  bestNextWatchTitle.textContent = bestMovie.title || 'Untitled film';
+  bestNextWatchReason.textContent = getBestNextWatchReason(bestMovie);
+
+  bestNextWatchMeta.textContent =
+    `${formatRating(bestMovie.vote_average)} · ${getMovieMatchScore(bestMovie)}% match · ${formatReleaseYear(bestMovie.release_date)}`;
 };
 
 const updateInsights = (movies) => {
@@ -334,23 +474,66 @@ const renderEmptyState = () => {
   updateInsights([]);
 };
 
+const renderFilteredEmptyState = () => {
+  likedMoviesContainer.innerHTML = '';
+
+  const emptyState = document.createElement('div');
+  emptyState.className = 'saved-empty-state';
+
+  const heading = document.createElement('h2');
+  heading.textContent = 'No films match this view';
+
+  const message = document.createElement('p');
+  message.textContent =
+    'Try changing the shortlist filter or save more recommendations to expand your comparison set.';
+
+  const resetButton = document.createElement('button');
+  resetButton.className = 'primary-action';
+  resetButton.type = 'button';
+  resetButton.textContent = 'Show all saved films';
+
+  resetButton.addEventListener('click', () => {
+    savedFilter.value = 'all';
+    renderSavedMovies();
+  });
+
+  emptyState.appendChild(heading);
+  emptyState.appendChild(message);
+  emptyState.appendChild(resetButton);
+
+  likedMoviesContainer.appendChild(emptyState);
+};
+
 const renderSavedMovies = () => {
   const likedMovies = getLikedMovies();
 
   likedMoviesContainer.innerHTML = '';
 
   if (likedMovies.length === 0) {
+    savedControlsPanel.hidden = true;
+    bestNextWatchPanel.hidden = true;
     renderEmptyState();
     return;
   }
+
+  const insights = calculateSavedInsights(likedMovies);
+  const controlledMovies = getControlledSavedMovies(likedMovies, insights);
 
   savedMoviesSummary.textContent =
     `${likedMovies.length} saved ${likedMovies.length === 1 ? 'film' : 'films'} in your shortlist.`;
 
   clearSavedMoviesBtn.hidden = false;
-  updateInsights(likedMovies);
+  savedControlsPanel.hidden = false;
 
-  likedMovies.forEach((movie) => {
+  updateInsights(likedMovies);
+  updateBestNextWatch(controlledMovies);
+
+  if (controlledMovies.length === 0) {
+    renderFilteredEmptyState();
+    return;
+  }
+
+  controlledMovies.forEach((movie) => {
     const card = createSavedMovieCard(movie);
     likedMoviesContainer.appendChild(card);
   });
@@ -385,4 +568,6 @@ clearSavedMoviesBtn.addEventListener('click', () => {
   renderSavedMovies();
 });
 
+savedSort.addEventListener('change', renderSavedMovies);
+savedFilter.addEventListener('change', renderSavedMovies);
 renderSavedMovies();

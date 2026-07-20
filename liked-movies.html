@@ -69,21 +69,56 @@
 
       <section id="preferenceProfilePanel" class="preference-profile-panel" hidden>
         <div>
-          <p class="eyebrow panel-eyebrow">Preference profile</p>
-          <h2>Your saved-film pattern</h2>
-          <p id="preferenceProfileSummary">
+            <p class="eyebrow panel-eyebrow">Preference profile</p>
+            <h2>Your saved-film pattern</h2>
+            <p id="preferenceProfileSummary">
             Save films to build a preference profile.
-          </p>
+            </p>
         </div>
 
         <div id="topGenresList" class="top-genres-list"></div>
-      </section>
+        </section>
 
-      <section
+        <section id="bestNextWatchPanel" class="best-next-watch-panel" hidden>
+        <div>
+            <p class="eyebrow panel-eyebrow">Best next watch</p>
+            <h2 id="bestNextWatchTitle">Your strongest saved option will appear here.</h2>
+            <p id="bestNextWatchReason">
+            Save films to compare your shortlist.
+            </p>
+        </div>
+
+        <p id="bestNextWatchMeta" class="best-next-watch-meta">—</p>
+        </section>
+
+        <section id="savedControlsPanel" class="saved-controls-panel" hidden>
+        <div class="saved-control-field">
+            <label for="savedSort">Sort shortlist</label>
+            <select id="savedSort" class="saved-control-select">
+            <option value="saved-desc">Recently saved</option>
+            <option value="match-desc">Highest match score</option>
+            <option value="rating-desc">Highest rating</option>
+            <option value="release-desc">Newest release year</option>
+            <option value="title-asc">Title A-Z</option>
+            </select>
+        </div>
+
+        <div class="saved-control-field">
+            <label for="savedFilter">Filter shortlist</label>
+            <select id="savedFilter" class="saved-control-select">
+            <option value="all">All saved films</option>
+            <option value="top-genre">Top saved genre</option>
+            <option value="rating-7">7+ rating</option>
+            <option value="match-80">80%+ match</option>
+            </select>
+        </div>
+        </section>
+
+        <section
         id="likedMoviesContainer"
         class="saved-movies-grid"
         aria-live="polite"
-      ></section>
+        ></section>
     </main>
   </body>
 </html>
