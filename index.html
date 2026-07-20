@@ -46,21 +46,74 @@
 
         <form id="genreForm" class="filter-form">
           <div class="form-field">
-            <label for="genres">Genre</label>
-            <select name="genres" id="genres">
-            </select>
+            <label id="genreLabel" for="genres">Genre</label>
+
+            <div class="custom-select" data-dropdown-id="genres">
+              <input type="hidden" name="genres" id="genres" value="">
+
+              <button
+                class="custom-select-trigger"
+                type="button"
+                aria-haspopup="listbox"
+                aria-expanded="false"
+                aria-labelledby="genreLabel genresSelectedText"
+              >
+                <span id="genresSelectedText">Any genre</span>
+                <span class="custom-select-arrow" aria-hidden="true"></span>
+              </button>
+
+              <div class="custom-select-menu" role="listbox" aria-label="Genre">
+                <button
+                  class="custom-select-option is-selected"
+                  type="button"
+                  role="option"
+                  aria-selected="true"
+                  data-value=""
+                >
+                  Any genre
+                </button>
+              </div>
+            </div>
           </div>
 
           <div class="form-field">
-            <label for="dateFilter">Release window</label>
-            <select name="dateFilter" id="dateFilter">
-              <option value="random">Any time</option>
-              <option value="7">Last week</option>
-              <option value="30">Last month</option>
-              <option value="90">Last 3 months</option>
-              <option value="180">Last 6 months</option>
-              <option value="365">Last year</option>
-            </select>
+            <label id="releaseWindowLabel" for="dateFilter">Release window</label>
+
+            <div class="custom-select" data-dropdown-id="dateFilter">
+              <input type="hidden" name="dateFilter" id="dateFilter" value="random">
+
+              <button
+                class="custom-select-trigger"
+                type="button"
+                aria-haspopup="listbox"
+                aria-expanded="false"
+                aria-labelledby="releaseWindowLabel dateFilterSelectedText"
+              >
+                <span id="dateFilterSelectedText">Any release date</span>
+                <span class="custom-select-arrow" aria-hidden="true"></span>
+              </button>
+
+              <div class="custom-select-menu" role="listbox" aria-label="Release window">
+                <button class="custom-select-option is-selected" type="button" role="option" aria-selected="true" data-value="random">
+                  Any release date
+                </button>
+                <button class="custom-select-option" type="button" role="option" aria-selected="false" data-value="7">
+                  Last week
+                </button>
+                <button class="custom-select-option" type="button" role="option" aria-selected="false" data-value="30">
+                  Last month
+                </button>
+                <button class="custom-select-option" type="button" role="option" aria-selected="false" data-value="90">
+                  Last 3 months
+                </button>
+                <button class="custom-select-option" type="button" role="option" aria-selected="false" data-value="180">
+                  Last 6 months
+                </button>
+                <button class="custom-select-option" type="button" role="option" aria-selected="false" data-value="365">
+                  Last year
+                </button>
+              </div>
+            </div>
           </div>
         </form>
 
