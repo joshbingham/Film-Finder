@@ -171,8 +171,24 @@ const getSelectedGenre = () => {
   return document.getElementById('genres').value;
 };
 
-const getSelectedDateFilter = () => {
-  return document.getElementById('dateFilter').value;
+const releasePeriodLabels = {
+  any: 'Any release date',
+  'recent-90': 'Recent releases',
+  'last-year': 'Last year',
+  '2020s': '2020s',
+  '2010s': '2010s',
+  '2000s': '2000s',
+  '1990s': '1990s',
+  '1980s': '1980s',
+  classic: 'Classic films',
+};
+
+const getReleasePeriod = () => {
+  return document.getElementById('releasePeriod')?.value || 'any';
+};
+
+const getReleasePeriodLabel = () => {
+  return releasePeriodLabels[getReleasePeriod()] || 'Any release date';
 };
 
 const getRecommendationStyle = () => {
@@ -422,7 +438,8 @@ const createMatchPanel = (match) => {
 
   const settings = document.createElement('p');
   settings.className = 'match-settings';
-  settings.textContent = `Mode: ${match.recommendationStyleLabel} · Minimum rating: ${match.minimumRatingLabel}`;
+  settings.textContent =
+  `Mode: ${match.recommendationStyleLabel} · Minimum rating: ${match.minimumRatingLabel} · Release period: ${match.releasePeriodLabel}`;
 
   const list = document.createElement('ul');
   list.className = 'match-reasons';
@@ -493,6 +510,8 @@ const formatMovieForStorage = (movie) => ({
   recommendation_style_label: movie.match?.recommendationStyleLabel ?? null,
   minimum_rating: movie.match?.minimumRating ?? null,
   minimum_rating_label: movie.match?.minimumRatingLabel ?? null,
+  release_period: movie.match?.releasePeriod ?? null,
+  release_period_label: movie.match?.releasePeriodLabel ?? null,
   saved_at: new Date().toISOString(),
 });
 

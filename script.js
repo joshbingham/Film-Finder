@@ -35,13 +35,17 @@ const getGenres = async () => {
 
 const getMovies = async () => {
   const selectedGenre = getSelectedGenre();
-  const dateFilter = getSelectedDateFilter();
+  const releasePeriod = getReleasePeriod();
 
-  let urlToFetch = `/api/tmdb?genre=${selectedGenre}`;
+  const queryParams = new URLSearchParams();
 
-  if (dateFilter !== 'random') {
-    urlToFetch += `&days=${dateFilter}`;
+  if (selectedGenre) {
+    queryParams.set('genre', selectedGenre);
   }
+
+  queryParams.set('releasePeriod', releasePeriod);
+
+  const urlToFetch = `/api/tmdb?${queryParams.toString()}`;
 
   try {
     const response = await fetch(urlToFetch);
@@ -158,7 +162,8 @@ const getFreshRecommendationPool = (movies) => {
 
 const calculateMatchInsights = (movie) => {
   const selectedGenre = getSelectedGenre();
-  const selectedReleaseWindow = getSelectedDateFilter();
+  const releasePeriod = getReleasePeriod();
+  const releasePeriodLabel = getReleasePeriodLabel();
   const recommendationStyle = getRecommendationStyle();
   const recommendationStyleLabel = getRecommendationStyleLabel();
   const minimumRating = getMinimumRating();
@@ -181,10 +186,13 @@ const calculateMatchInsights = (movie) => {
     addMatchReason(reasons, 'Matches your selected genre.');
   }
 
-  if (selectedReleaseWindow !== 'random') {
+  if (releasePeriod !== 'any') {
     score += 10;
-    addMatchReason(reasons, 'Falls within your chosen release window.');
-  }
+    addMatchReason(
+        reasons,
+        `Falls within your selected release period: ${releasePeriodLabel}.`
+    );
+    }
 
   if (
     minimumRating > 0 &&
@@ -364,7 +372,9 @@ const calculateMatchInsights = (movie) => {
     recommendationStyleLabel,
     minimumRating,
     minimumRatingLabel,
-  };
+    releasePeriod,
+    releasePeriodLabel,
+    };
 };
 
 const getRecommendedMovie = (movies) => {

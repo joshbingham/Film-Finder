@@ -23,7 +23,7 @@
       <h1>Film Finder</h1>
 
       <p class="hero-copy">
-        Discover films through genre filters, release windows, recommendation data,
+        Discover films through genre filters, release periods, recommendation data,
         and a saved shortlist.
       </p>
 
@@ -39,8 +39,8 @@
         <div class="section-heading">
           <h2 id="controls-heading">Find a recommendation</h2>
           <p>
-            Select your filters and recommendation settings to generate a more tailored
-            movie recommendation from TMDB data.
+            Select your filters, release period and recommendation settings to generate
+            a more tailored movie recommendation from TMDB data.
           </p>
         </div>
 
@@ -77,40 +77,48 @@
           </div>
 
           <div class="form-field">
-            <label id="releaseWindowLabel" for="dateFilter">Release window</label>
-
-            <div class="custom-select" data-dropdown-id="dateFilter">
-              <input type="hidden" name="dateFilter" id="dateFilter" value="random">
+            <label id="releasePeriodLabel" for="releasePeriod">Release period</label>
+              <div class="custom-select" data-dropdown-id="releasePeriod">
+              <input type="hidden" name="releasePeriod" id="releasePeriod" value="any">
 
               <button
                 class="custom-select-trigger"
                 type="button"
                 aria-haspopup="listbox"
                 aria-expanded="false"
-                aria-labelledby="releaseWindowLabel dateFilterSelectedText"
+                aria-labelledby="releasePeriodLabel releasePeriodSelectedText"
               >
-                <span id="dateFilterSelectedText">Any release date</span>
+                <span id="releasePeriodSelectedText">Any release date</span>
                 <span class="custom-select-arrow" aria-hidden="true"></span>
               </button>
 
-              <div class="custom-select-menu" role="listbox" aria-label="Release window">
-                <button class="custom-select-option is-selected" type="button" role="option" aria-selected="true" data-value="random">
+              <div class="custom-select-menu" role="listbox" aria-label="Release period">
+                <button class="custom-select-option is-selected" type="button" role="option" aria-selected="true" data-value="any">
                   Any release date
                 </button>
-                <button class="custom-select-option" type="button" role="option" aria-selected="false" data-value="7">
-                  Last week
+                <button class="custom-select-option" type="button" role="option" aria-selected="false" data-value="recent-90">
+                  Recent releases
                 </button>
-                <button class="custom-select-option" type="button" role="option" aria-selected="false" data-value="30">
-                  Last month
-                </button>
-                <button class="custom-select-option" type="button" role="option" aria-selected="false" data-value="90">
-                  Last 3 months
-                </button>
-                <button class="custom-select-option" type="button" role="option" aria-selected="false" data-value="180">
-                  Last 6 months
-                </button>
-                <button class="custom-select-option" type="button" role="option" aria-selected="false" data-value="365">
+                <button class="custom-select-option" type="button" role="option" aria-selected="false" data-value="last-year">
                   Last year
+                </button>
+                <button class="custom-select-option" type="button" role="option" aria-selected="false" data-value="2020s">
+                  2020s
+                </button>
+                <button class="custom-select-option" type="button" role="option" aria-selected="false" data-value="2010s">
+                  2010s
+                </button>
+                <button class="custom-select-option" type="button" role="option" aria-selected="false" data-value="2000s">
+                  2000s
+                </button>
+                <button class="custom-select-option" type="button" role="option" aria-selected="false" data-value="1990s">
+                  1990s
+                </button>
+                <button class="custom-select-option" type="button" role="option" aria-selected="false" data-value="1980s">
+                  1980s
+                </button>
+                <button class="custom-select-option" type="button" role="option" aria-selected="false" data-value="classic">
+                  Classic films
                 </button>
               </div>
             </div>
