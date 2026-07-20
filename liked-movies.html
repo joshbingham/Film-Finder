@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta
       name="description"
-      content="Review and manage your saved Film Finder recommendations."
+      content="Review saved Film Finder recommendations and view preference insights."
     >
 
     <link rel="stylesheet" href="style.css">
@@ -21,7 +21,8 @@
       <h1>Saved Films</h1>
 
       <p class="hero-copy">
-        Review the films you’ve shortlisted while exploring recommendations.
+        Review your shortlisted films and see what your saved choices reveal
+        about your preferences.
       </p>
 
       <a class="back-link" href="index.html">
@@ -42,6 +43,40 @@
         <button id="clearSavedMoviesBtn" class="secondary-action danger-action" type="button" hidden>
           Clear all
         </button>
+      </section>
+
+      <section id="savedInsightsPanel" class="saved-insights-panel" hidden>
+        <div class="insight-card">
+          <span class="insight-label">Saved films</span>
+          <strong id="savedCountInsight">0</strong>
+        </div>
+
+        <div class="insight-card">
+          <span class="insight-label">Average rating</span>
+          <strong id="averageRatingInsight">—</strong>
+        </div>
+
+        <div class="insight-card">
+          <span class="insight-label">Top genre</span>
+          <strong id="topGenreInsight">—</strong>
+        </div>
+
+        <div class="insight-card">
+          <span class="insight-label">Strongest match</span>
+          <strong id="strongestMatchInsight">—</strong>
+        </div>
+      </section>
+
+      <section id="preferenceProfilePanel" class="preference-profile-panel" hidden>
+        <div>
+          <p class="eyebrow panel-eyebrow">Preference profile</p>
+          <h2>Your saved-film pattern</h2>
+          <p id="preferenceProfileSummary">
+            Save films to build a preference profile.
+          </p>
+        </div>
+
+        <div id="topGenresList" class="top-genres-list"></div>
       </section>
 
       <section
