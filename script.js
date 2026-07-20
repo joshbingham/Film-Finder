@@ -113,6 +113,49 @@ const filterMoviesByMinimumRating = (movies) => {
   });
 };
 
+const recentRecommendationsStorageKey = 'recentlyRecommendedMovies';
+const recentRecommendationLimit = 12;
+
+const getSavedMovieIds = () => {
+  return getLikedMovies().map((movie) => String(movie.id));
+};
+
+const getRecentlyRecommendedMovieIds = () => {
+  try {
+    const recentlyRecommended = localStorage.getItem(recentRecommendationsStorageKey);
+
+    return recentlyRecommended ? JSON.parse(recentlyRecommended).map(String) : [];
+  } catch (error) {
+    console.error('Unable to read recently recommended movies:', error);
+    return [];
+  }
+};
+
+const saveRecentlyRecommendedMovie = (movieId) => {
+  const movieIdAsString = String(movieId);
+
+  const updatedRecentMovies = [
+    movieIdAsString,
+    ...getRecentlyRecommendedMovieIds().filter((id) => id !== movieIdAsString),
+  ].slice(0, recentRecommendationLimit);
+
+  localStorage.setItem(
+    recentRecommendationsStorageKey,
+    JSON.stringify(updatedRecentMovies)
+  );
+};
+
+const getFreshRecommendationPool = (movies) => {
+  const savedMovieIds = new Set(getSavedMovieIds());
+  const recentlyRecommendedMovieIds = new Set(getRecentlyRecommendedMovieIds());
+
+  return movies.filter((movie) => {
+    const movieId = String(movie.id);
+
+    return !savedMovieIds.has(movieId) && !recentlyRecommendedMovieIds.has(movieId);
+  });
+};
+
 const calculateMatchInsights = (movie) => {
   const selectedGenre = getSelectedGenre();
   const selectedReleaseWindow = getSelectedDateFilter();
@@ -372,7 +415,14 @@ const showRandomMovie = async () => {
         return;
     }
 
-    const recommendation = getRecommendedMovie(filteredMovies);
+    const freshRecommendationPool = getFreshRecommendationPool(filteredMovies);
+
+    if (freshRecommendationPool.length === 0) {
+        showNoNewRecommendationsState();
+        return;
+    }
+
+    const recommendation = getRecommendedMovie(freshRecommendationPool);
 
     if (!recommendation) {
       showEmptyState();
@@ -389,13 +439,21 @@ const showRandomMovie = async () => {
     }
 
     currentMovie = {
-      ...info,
-      genre_ids: normaliseGenreIds(info, recommendation.movie),
-      match: recommendation.match,
-    };
+        ...info,
+        genre_ids: normaliseGenreIds(info, recommendation.movie),
+        match: {
+            ...recommendation.match,
+            reasons: [
+            'Not already saved or recently recommended.',
+            ...recommendation.match.reasons,
+            ].slice(0, 5),
+        },
+        };
 
-    clearCurrentMovie();
-    displayMovie(currentMovie);
+        clearCurrentMovie();
+        displayMovie(currentMovie);
+        saveRecentlyRecommendedMovie(currentMovie.id);
+
   } catch (error) {
     console.error('Unable to show recommendation:', error);
     showErrorState();

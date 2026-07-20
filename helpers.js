@@ -285,6 +285,13 @@ const showEmptyState = () => {
   );
 };
 
+const showNoNewRecommendationsState = () => {
+  setMovieMessage(
+    'You have seen or saved all matching films in this result set. Try a wider release window, lower the minimum rating, or choose another genre.',
+    'status-message'
+  );
+};
+
 const showErrorState = () => {
   setMovieMessage(
     'Something went wrong while loading a recommendation. Please try again.',
