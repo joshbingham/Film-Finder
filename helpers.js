@@ -175,6 +175,34 @@ const getSelectedDateFilter = () => {
   return document.getElementById('dateFilter').value;
 };
 
+const getRecommendationStyle = () => {
+  return document.getElementById('recommendationStyle')?.value || 'balanced';
+};
+
+const getRecommendationStyleLabel = () => {
+  const styleLabels = {
+    balanced: 'Balanced',
+    quality: 'Highly rated',
+    popular: 'Popular',
+    'hidden-gems': 'Hidden gems',
+    'saved-preferences': 'Use saved preferences',
+  };
+
+  return styleLabels[getRecommendationStyle()] || 'Balanced';
+};
+
+const getMinimumRating = () => {
+  const minimumRating = Number(document.getElementById('minimumRating')?.value || 0);
+
+  return Number.isNaN(minimumRating) ? 0 : minimumRating;
+};
+
+const getMinimumRatingLabel = () => {
+  const minimumRating = getMinimumRating();
+
+  return minimumRating > 0 ? `${minimumRating}+ rating` : 'Any rating';
+};
+
 const hideDecisionButtons = () => {
   const btnDiv = document.getElementById('likeOrDislikeBtns');
   btnDiv.setAttribute('hidden', '');
@@ -385,6 +413,10 @@ const createMatchPanel = (match) => {
   header.appendChild(heading);
   header.appendChild(score);
 
+  const settings = document.createElement('p');
+  settings.className = 'match-settings';
+  settings.textContent = `Mode: ${match.recommendationStyleLabel} · Minimum rating: ${match.minimumRatingLabel}`;
+
   const list = document.createElement('ul');
   list.className = 'match-reasons';
 
@@ -395,6 +427,7 @@ const createMatchPanel = (match) => {
   });
 
   panel.appendChild(header);
+  panel.appendChild(settings);
   panel.appendChild(list);
 
   return panel;
@@ -449,6 +482,10 @@ const formatMovieForStorage = (movie) => ({
   genre_ids: Array.isArray(movie.genre_ids) ? movie.genre_ids : [],
   match_score: movie.match?.score ?? null,
   match_reasons: movie.match?.reasons ?? [],
+  recommendation_style: movie.match?.recommendationStyle ?? null,
+  recommendation_style_label: movie.match?.recommendationStyleLabel ?? null,
+  minimum_rating: movie.match?.minimumRating ?? null,
+  minimum_rating_label: movie.match?.minimumRatingLabel ?? null,
   saved_at: new Date().toISOString(),
 });
 

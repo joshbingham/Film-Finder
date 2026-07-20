@@ -39,8 +39,8 @@
         <div class="section-heading">
           <h2 id="controls-heading">Find a recommendation</h2>
           <p>
-            Select a genre and release window to generate a movie recommendation
-            from TMDB data.
+            Select your filters and recommendation settings to generate a more tailored
+            movie recommendation from TMDB data.
           </p>
         </div>
 
@@ -111,6 +111,77 @@
                 </button>
                 <button class="custom-select-option" type="button" role="option" aria-selected="false" data-value="365">
                   Last year
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-field">
+            <label id="recommendationStyleLabel" for="recommendationStyle">Recommendation style</label>
+
+            <div class="custom-select" data-dropdown-id="recommendationStyle">
+              <input type="hidden" name="recommendationStyle" id="recommendationStyle" value="balanced">
+
+              <button
+                class="custom-select-trigger"
+                type="button"
+                aria-haspopup="listbox"
+                aria-expanded="false"
+                aria-labelledby="recommendationStyleLabel recommendationStyleSelectedText"
+              >
+                <span id="recommendationStyleSelectedText">Balanced</span>
+                <span class="custom-select-arrow" aria-hidden="true"></span>
+              </button>
+
+              <div class="custom-select-menu" role="listbox" aria-label="Recommendation style">
+                <button class="custom-select-option is-selected" type="button" role="option" aria-selected="true" data-value="balanced">
+                  Balanced
+                </button>
+                <button class="custom-select-option" type="button" role="option" aria-selected="false" data-value="quality">
+                  Highly rated
+                </button>
+                <button class="custom-select-option" type="button" role="option" aria-selected="false" data-value="popular">
+                  Popular
+                </button>
+                <button class="custom-select-option" type="button" role="option" aria-selected="false" data-value="hidden-gems">
+                  Hidden gems
+                </button>
+                <button class="custom-select-option" type="button" role="option" aria-selected="false" data-value="saved-preferences">
+                  Use saved preferences
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-field">
+            <label id="minimumRatingLabel" for="minimumRating">Minimum rating</label>
+
+            <div class="custom-select" data-dropdown-id="minimumRating">
+              <input type="hidden" name="minimumRating" id="minimumRating" value="">
+
+              <button
+                class="custom-select-trigger"
+                type="button"
+                aria-haspopup="listbox"
+                aria-expanded="false"
+                aria-labelledby="minimumRatingLabel minimumRatingSelectedText"
+              >
+                <span id="minimumRatingSelectedText">Any rating</span>
+                <span class="custom-select-arrow" aria-hidden="true"></span>
+              </button>
+
+              <div class="custom-select-menu" role="listbox" aria-label="Minimum rating">
+                <button class="custom-select-option is-selected" type="button" role="option" aria-selected="true" data-value="">
+                  Any rating
+                </button>
+                <button class="custom-select-option" type="button" role="option" aria-selected="false" data-value="6">
+                  6+ rating
+                </button>
+                <button class="custom-select-option" type="button" role="option" aria-selected="false" data-value="7">
+                  7+ rating
+                </button>
+                <button class="custom-select-option" type="button" role="option" aria-selected="false" data-value="8">
+                  8+ rating
                 </button>
               </div>
             </div>
