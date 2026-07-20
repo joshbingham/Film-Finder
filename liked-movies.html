@@ -1,22 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <meta charset="UTF-8">
-    <title>Liked Movies - Film Finder</title>
+    <title>Saved Films | Film Finder</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400&family=Fredoka+One&family=Questrial&family=Staatliches&display=swap" rel="stylesheet">
+    <meta
+      name="description"
+      content="Review and manage your saved Film Finder recommendations."
+    >
+
     <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <header>
-        <h1>🍿Liked Movies🍿</h1>
-        <a href="index.html">← Back to Film Finder</a>
+    <script defer src="https://kit.fontawesome.com/e918d10e90.js" crossorigin="anonymous"></script>
+    <script defer src="liked-movies.js"></script>
+  </head>
+
+  <body>
+    <header class="app-header saved-header">
+      <p class="eyebrow">Saved shortlist</p>
+
+      <h1>Saved Films</h1>
+
+      <p class="hero-copy">
+        Review the films you’ve shortlisted while exploring recommendations.
+      </p>
+
+      <a class="back-link" href="index.html">
+        <i class="fa-solid fa-arrow-left"></i>
+        Back to Film Finder
+      </a>
     </header>
 
-    <main>
-        <div id="likedMoviesContainer"></div>
+    <main class="app-shell saved-page-shell">
+      <section class="saved-page-summary">
+        <div>
+          <h2>Your shortlist</h2>
+          <p id="savedMoviesSummary">
+            Saved films will appear here after you add them.
+          </p>
+        </div>
+
+        <button id="clearSavedMoviesBtn" class="secondary-action danger-action" type="button" hidden>
+          Clear all
+        </button>
+      </section>
+
+      <section
+        id="likedMoviesContainer"
+        class="saved-movies-grid"
+        aria-live="polite"
+      ></section>
     </main>
-</body>
+  </body>
 </html>

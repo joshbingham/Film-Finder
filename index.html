@@ -48,7 +48,7 @@
           <div class="form-field">
             <label id="genreLabel" for="genres">Genre</label>
 
-            <div class="custom-select" data-dropdown-id="genres">
+            <div class="custom-select is-disabled" data-dropdown-id="genres">
               <input type="hidden" name="genres" id="genres" value="">
 
               <button
@@ -58,7 +58,7 @@
                 aria-expanded="false"
                 aria-labelledby="genreLabel genresSelectedText"
               >
-                <span id="genresSelectedText">Any genre</span>
+                <span id="genresSelectedText">Loading genres...</span>
                 <span class="custom-select-arrow" aria-hidden="true"></span>
               </button>
 
@@ -70,7 +70,7 @@
                   aria-selected="true"
                   data-value=""
                 >
-                  Any genre
+                  Loading genres...
                 </button>
               </div>
             </div>
