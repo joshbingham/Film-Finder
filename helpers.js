@@ -364,6 +364,42 @@ const createMovieCast = (credits) => {
   return castParagraph;
 };
 
+const createMatchPanel = (match) => {
+  if (!match) {
+    return null;
+  }
+
+  const panel = document.createElement('div');
+  panel.className = 'match-panel';
+
+  const header = document.createElement('div');
+  header.className = 'match-panel-header';
+
+  const heading = document.createElement('h3');
+  heading.textContent = 'Why this recommendation?';
+
+  const score = document.createElement('span');
+  score.className = 'match-score';
+  score.textContent = `${match.score}% match`;
+
+  header.appendChild(heading);
+  header.appendChild(score);
+
+  const list = document.createElement('ul');
+  list.className = 'match-reasons';
+
+  match.reasons.forEach((reason) => {
+    const item = document.createElement('li');
+    item.textContent = reason;
+    list.appendChild(item);
+  });
+
+  panel.appendChild(header);
+  panel.appendChild(list);
+
+  return panel;
+};
+
 const displayMovie = (movieInfo) => {
   const moviePosterDiv = document.getElementById('moviePoster');
   const movieTextDiv = document.getElementById('movieText');
@@ -374,12 +410,18 @@ const displayMovie = (movieInfo) => {
   const titleHeader = createMovieTitle(movieInfo.title);
   const rating = createMovieRating(movieInfo.vote_average);
   const cast = createMovieCast(movieInfo.credits);
+  const matchPanel = createMatchPanel(movieInfo.match);
   const overviewText = createMovieOverview(movieInfo.overview);
 
   moviePosterDiv.appendChild(moviePoster);
   movieTextDiv.appendChild(titleHeader);
   movieTextDiv.appendChild(rating);
   movieTextDiv.appendChild(cast);
+
+  if (matchPanel) {
+    movieTextDiv.appendChild(matchPanel);
+  }
+
   movieTextDiv.appendChild(overviewText);
 
   showBtns();
@@ -404,6 +446,9 @@ const formatMovieForStorage = (movie) => ({
   overview: movie.overview,
   release_date: movie.release_date,
   vote_average: movie.vote_average,
+  genre_ids: Array.isArray(movie.genre_ids) ? movie.genre_ids : [],
+  match_score: movie.match?.score ?? null,
+  match_reasons: movie.match?.reasons ?? [],
   saved_at: new Date().toISOString(),
 });
 
