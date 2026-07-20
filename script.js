@@ -105,18 +105,6 @@ const addMatchReason = (reasons, reason) => {
   }
 };
 
-const filterMoviesByMinimumRating = (movies) => {
-  const minimumRating = getMinimumRating();
-
-  if (!minimumRating) {
-    return movies;
-  }
-
-  return movies.filter((movie) => {
-    return typeof movie.vote_average === 'number' && movie.vote_average >= minimumRating;
-  });
-};
-
 const recentRecommendationsStorageKey = 'recentlyRecommendedMovies';
 const recentRecommendationLimit = 12;
 
@@ -166,8 +154,6 @@ const calculateMatchInsights = (movie) => {
   const releasePeriodLabel = getReleasePeriodLabel();
   const recommendationStyle = getRecommendationStyle();
   const recommendationStyleLabel = getRecommendationStyleLabel();
-  const minimumRating = getMinimumRating();
-  const minimumRatingLabel = getMinimumRatingLabel();
   const savedGenreIds = getSavedGenreIds();
 
   let score = 35;
@@ -193,15 +179,6 @@ const calculateMatchInsights = (movie) => {
         `Falls within your selected release period: ${releasePeriodLabel}.`
     );
     }
-
-  if (
-    minimumRating > 0 &&
-    typeof movie.vote_average === 'number' &&
-    movie.vote_average >= minimumRating
-  ) {
-    score += 12;
-    addMatchReason(reasons, `Meets your ${minimumRating}+ rating preference.`);
-  }
 
   if (movie.poster_path) {
     score += 5;
@@ -370,8 +347,6 @@ const calculateMatchInsights = (movie) => {
     reasons: reasons.slice(0, 5),
     recommendationStyle,
     recommendationStyleLabel,
-    minimumRating,
-    minimumRatingLabel,
     releasePeriod,
     releasePeriodLabel,
     };
@@ -418,14 +393,7 @@ const showRandomMovie = async () => {
         return;
     }
 
-    const filteredMovies = filterMoviesByMinimumRating(movies);
-
-    if (filteredMovies.length === 0) {
-        showEmptyState();
-        return;
-    }
-
-    const freshRecommendationPool = getFreshRecommendationPool(filteredMovies);
+    const freshRecommendationPool = getFreshRecommendationPool(movies);
 
     if (freshRecommendationPool.length === 0) {
         showNoNewRecommendationsState();

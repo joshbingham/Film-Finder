@@ -207,18 +207,6 @@ const getRecommendationStyleLabel = () => {
   return styleLabels[getRecommendationStyle()] || 'Balanced';
 };
 
-const getMinimumRating = () => {
-  const minimumRating = Number(document.getElementById('minimumRating')?.value || 0);
-
-  return Number.isNaN(minimumRating) ? 0 : minimumRating;
-};
-
-const getMinimumRatingLabel = () => {
-  const minimumRating = getMinimumRating();
-
-  return minimumRating > 0 ? `${minimumRating}+ rating` : 'Any rating';
-};
-
 const hideDecisionButtons = () => {
   const btnDiv = document.getElementById('likeOrDislikeBtns');
   btnDiv.setAttribute('hidden', '');
@@ -296,14 +284,14 @@ const showLoadingState = () => {
 
 const showEmptyState = () => {
   setMovieMessage(
-    'No films found for those filters. Try a wider release window or choose another genre.',
+    'No films found for those filters. Try a wider release period, choose another genre, or use a broader recommendation style.',
     'status-message'
   );
 };
 
 const showNoNewRecommendationsState = () => {
   setMovieMessage(
-    'You have seen or saved all matching films in this result set. Try a wider release window, lower the minimum rating, or choose another genre.',
+    'You have seen or saved all matching films in this result set. Try a wider release period, choose another genre, or change the recommendation style.',
     'status-message'
   );
 };
@@ -439,7 +427,7 @@ const createMatchPanel = (match) => {
   const settings = document.createElement('p');
   settings.className = 'match-settings';
   settings.textContent =
-  `Mode: ${match.recommendationStyleLabel} · Minimum rating: ${match.minimumRatingLabel} · Release period: ${match.releasePeriodLabel}`;
+  `Mode: ${match.recommendationStyleLabel} · Release period: ${match.releasePeriodLabel}`;
 
   const list = document.createElement('ul');
   list.className = 'match-reasons';
@@ -508,8 +496,6 @@ const formatMovieForStorage = (movie) => ({
   match_reasons: movie.match?.reasons ?? [],
   recommendation_style: movie.match?.recommendationStyle ?? null,
   recommendation_style_label: movie.match?.recommendationStyleLabel ?? null,
-  minimum_rating: movie.match?.minimumRating ?? null,
-  minimum_rating_label: movie.match?.minimumRatingLabel ?? null,
   release_period: movie.match?.releasePeriod ?? null,
   release_period_label: movie.match?.releasePeriodLabel ?? null,
   saved_at: new Date().toISOString(),

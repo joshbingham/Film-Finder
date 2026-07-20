@@ -140,10 +140,10 @@ input {
 
 .filter-form {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 1rem;
   margin: 1.5rem auto 0;
-  max-width: 900px;
+  max-width: 960px;
 }
 
 .form-field {
