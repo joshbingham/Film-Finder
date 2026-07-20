@@ -12,7 +12,7 @@ const wait = (milliseconds) => {
 
 const setRecommendationButtonLoading = (isLoading) => {
   playBtn.disabled = isLoading;
-  playBtn.textContent = isLoading ? 'Finding film...' : 'Get Recommendation';
+  playBtn.textContent = isLoading ? 'Finding a film...' : 'Find a film';
 };
 
 const getGenres = async () => {
@@ -176,7 +176,7 @@ const calculateMatchInsights = (movie) => {
     score += 10;
     addMatchReason(
         reasons,
-        `Falls within your selected release period: ${releasePeriodLabel}.`
+        `Fits your chosen time period: ${releasePeriodLabel}.`
     );
     }
 
@@ -184,20 +184,20 @@ const calculateMatchInsights = (movie) => {
     score += 5;
   } else {
     score -= 10;
-    addMatchReason(reasons, 'Poster data is unavailable.');
+    addMatchReason(reasons, 'A poster is not available for this film.');
   }
 
   if (movie.overview) {
     score += 5;
   } else {
     score -= 8;
-    addMatchReason(reasons, 'Overview data is unavailable.');
+    addMatchReason(reasons, 'A description is not available for this film.');
   }
 
   if (recommendationStyle === 'balanced') {
     addMatchReason(
       reasons,
-      'Balanced mode considers rating, audience data and saved preferences.'
+      'This balances rating, popularity and films you have saved.'
     );
 
     if (typeof movie.vote_average === 'number') {
@@ -213,10 +213,10 @@ const calculateMatchInsights = (movie) => {
     if (typeof movie.vote_count === 'number') {
       if (movie.vote_count >= 1000) {
         score += 14;
-        addMatchReason(reasons, 'Has a large number of audience votes.');
+        addMatchReason(reasons, 'Lots of viewers have rated it.');
       } else if (movie.vote_count >= 250) {
         score += 8;
-        addMatchReason(reasons, 'Has enough audience data to support the recommendation.');
+        addMatchReason(reasons, 'Enough viewers have rated it to make the score useful.');
       }
     }
 
@@ -227,24 +227,24 @@ const calculateMatchInsights = (movie) => {
   }
 
   if (recommendationStyle === 'quality') {
-    addMatchReason(reasons, 'Highly rated mode prioritises stronger audience scores.');
+    addMatchReason(reasons, 'This mood favours films with stronger ratings.');
 
     if (typeof movie.vote_average === 'number') {
       if (movie.vote_average >= 8) {
         score += 32;
-        addMatchReason(reasons, 'Excellent audience rating for this mode.');
+        addMatchReason(reasons, 'Excellent audience rating.');
       } else if (movie.vote_average >= 7) {
         score += 24;
-        addMatchReason(reasons, 'Strong audience rating for this mode.');
+        addMatchReason(reasons, 'Strong audience rating.');
       } else if (movie.vote_average >= 6.5) {
         score += 12;
-        addMatchReason(reasons, 'Solid rating, but not one of the strongest results.');
+        addMatchReason(reasons, 'Solid rating, with room for stronger picks.');
       }
     }
 
     if (typeof movie.vote_count === 'number' && movie.vote_count >= 250) {
       score += 8;
-      addMatchReason(reasons, 'Rating is supported by a useful number of votes.');
+      addMatchReason(reasons, 'The rating is backed by a useful number of viewers.');
     }
 
     if (hasSavedPreferenceMatch) {
@@ -254,24 +254,24 @@ const calculateMatchInsights = (movie) => {
   }
 
   if (recommendationStyle === 'popular') {
-    addMatchReason(reasons, 'Popular mode prioritises films with broader audience data.');
+    addMatchReason(reasons, 'This mood favours films many viewers have already rated.');
 
     if (typeof movie.vote_count === 'number') {
       if (movie.vote_count >= 3000) {
         score += 32;
-        addMatchReason(reasons, 'Very high audience vote count.');
+        addMatchReason(reasons, 'A very widely watched and rated film.');
       } else if (movie.vote_count >= 1000) {
         score += 24;
-        addMatchReason(reasons, 'High audience vote count.');
+        addMatchReason(reasons, 'A widely rated film.');
       } else if (movie.vote_count >= 250) {
         score += 12;
-        addMatchReason(reasons, 'Moderate audience vote count.');
+        addMatchReason(reasons, 'A good number of viewers have rated it.');
       }
     }
 
     if (typeof movie.vote_average === 'number' && movie.vote_average >= 6.5) {
       score += 10;
-      addMatchReason(reasons, 'Popularity is supported by a solid rating.');
+      addMatchReason(reasons, 'Popular with viewers and still well rated.');
     }
 
     if (hasSavedPreferenceMatch) {
@@ -283,7 +283,7 @@ const calculateMatchInsights = (movie) => {
   if (recommendationStyle === 'hidden-gems') {
     addMatchReason(
       reasons,
-      'Hidden gems mode looks for solid ratings without only favouring obvious blockbusters.'
+      'This mood looks for well-rated films that are not just the obvious blockbusters.'
     );
 
     if (
@@ -292,42 +292,42 @@ const calculateMatchInsights = (movie) => {
     ) {
       if (movie.vote_average >= 7 && movie.vote_count >= 50 && movie.vote_count <= 900) {
         score += 32;
-        addMatchReason(reasons, 'Strong rating with a more modest audience count.');
+        addMatchReason(reasons, 'Well rated, but not one of the most obvious picks.');
       } else if (movie.vote_average >= 6.5 && movie.vote_count < 1200) {
         score += 20;
-        addMatchReason(reasons, 'Good rating with less mainstream audience data.');
+        addMatchReason(reasons, 'Good rating with a less mainstream feel.');
       } else if (movie.vote_count >= 3000) {
         score -= 10;
-        addMatchReason(reasons, 'More mainstream than a typical hidden-gem result.');
+        addMatchReason(reasons, 'More widely known than a typical hidden gem.');
       }
     }
 
     if (hasSavedPreferenceMatch) {
       score += 10;
-      addMatchReason(reasons, 'Still reflects genres you have previously saved.');
+      addMatchReason(reasons, 'Still similar to films you have saved before.');
     }
   }
 
   if (recommendationStyle === 'saved-preferences') {
     addMatchReason(
       reasons,
-      'Saved preferences mode prioritises patterns from your shortlist.'
+      'This uses the kinds of films you have saved before.'
     );
 
     if (hasSavedPreferenceMatch) {
       score += 34;
-      addMatchReason(reasons, 'Strong overlap with genres you have previously saved.');
+      addMatchReason(reasons, 'Similar to films you have saved before.');
     } else if (savedGenreIds.length === 0) {
       score += 8;
       addMatchReason(
         reasons,
-        'Save more films to make this mode more personalised over time.'
+        'Save more films and this option will get more personal over time.'
       );
     }
 
     if (typeof movie.vote_average === 'number' && movie.vote_average >= 6.5) {
       score += 12;
-      addMatchReason(reasons, 'Also has a solid audience rating.');
+      addMatchReason(reasons, 'It is also well rated.');
     }
 
     if (typeof movie.vote_count === 'number' && movie.vote_count >= 250) {
@@ -339,7 +339,7 @@ const calculateMatchInsights = (movie) => {
   const normalisedScore = Math.max(0, Math.min(100, score));
 
   if (reasons.length === 0) {
-    reasons.push('Recommended from your current filter selection.');
+    reasons.push('Chosen from the options that match your selection.');
   }
 
   return {
@@ -422,7 +422,7 @@ const showRandomMovie = async () => {
         match: {
             ...recommendation.match,
             reasons: [
-            'Not already saved or recently recommended.',
+            'New pick — not saved or recently shown.',
             ...recommendation.match.reasons,
             ].slice(0, 5),
         },

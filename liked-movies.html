@@ -16,13 +16,12 @@
 
   <body>
     <header class="app-header saved-header">
-      <p class="eyebrow">Saved shortlist</p>
+      <p class="eyebrow">Your watchlist</p>
 
       <h1>Saved Films</h1>
 
       <p class="hero-copy">
-        Review your shortlisted films and see what your saved choices reveal
-        about your preferences.
+        Compare the films you have saved and choose what to watch next.
       </p>
 
       <a class="back-link" href="index.html">
@@ -69,8 +68,8 @@
 
       <section id="preferenceProfilePanel" class="preference-profile-panel" hidden>
         <div>
-            <p class="eyebrow panel-eyebrow">Preference profile</p>
-            <h2>Your saved-film pattern</h2>
+            <p class="eyebrow panel-eyebrow">Your taste so far</p>
+            <h2>What you seem to like</h2>
             <p id="preferenceProfileSummary">
             Save films to build a preference profile.
             </p>
@@ -82,7 +81,7 @@
         <section id="bestNextWatchPanel" class="best-next-watch-panel" hidden>
         <div>
             <p class="eyebrow panel-eyebrow">Best next watch</p>
-            <h2 id="bestNextWatchTitle">Your strongest saved option will appear here.</h2>
+            <h2 id="bestNextWatchTitle">Your best saved option will appear here.</h2>
             <p id="bestNextWatchReason">
             Save films to compare your shortlist.
             </p>
@@ -93,10 +92,10 @@
 
         <section id="savedControlsPanel" class="saved-controls-panel" hidden>
         <div class="saved-control-field">
-            <label for="savedSort">Sort shortlist</label>
+            <label for="savedSort">Sort saved films</label>
             <select id="savedSort" class="saved-control-select">
             <option value="saved-desc">Recently saved</option>
-            <option value="match-desc">Highest match score</option>
+            <option value="match-desc">Best fit</option>
             <option value="rating-desc">Highest rating</option>
             <option value="release-desc">Newest release year</option>
             <option value="title-asc">Title A-Z</option>
@@ -104,12 +103,12 @@
         </div>
 
         <div class="saved-control-field">
-            <label for="savedFilter">Filter shortlist</label>
+            <label for="savedFilter">Show</label>
             <select id="savedFilter" class="saved-control-select">
             <option value="all">All saved films</option>
-            <option value="top-genre">Top saved genre</option>
+            <option value="top-genre">Most saved genre</option>
             <option value="rating-7">7+ rating</option>
-            <option value="match-80">80%+ match</option>
+            <option value="match-80">Best fit 80%+</option>
             </select>
         </div>
         </section>

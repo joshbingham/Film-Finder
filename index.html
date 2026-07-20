@@ -18,29 +18,29 @@
 
   <body>
     <header class="app-header">
-      <p class="eyebrow">API-driven discovery tool</p>
+      <p class="eyebrow">Movie discovery made easier</p>
 
       <h1>Film Finder</h1>
 
       <p class="hero-copy">
-        Discover films through genre filters, release periods, recommendation data,
-        and a saved shortlist.
+        Find a film for tonight by choosing what you are in the mood for,
+        exploring different eras, and saving the ones you like.
       </p>
 
       <div class="workflow-steps" aria-label="Film Finder workflow">
-        <span>Choose preferences</span>
-        <span>Review recommendation</span>
-        <span>Save your shortlist</span>
+        <span>Choose your mood</span>
+        <span>Get a film suggestion</span>
+        <span>Save ideas for later</span>
       </div>
     </header>
 
     <main class="app-shell">
       <section class="controls-card" aria-labelledby="controls-heading">
         <div class="section-heading">
-          <h2 id="controls-heading">Find a recommendation</h2>
+          <h2 id="controls-heading">Find something to watch</h2>
           <p>
-            Select your filters, release period and recommendation settings to generate
-            a more tailored movie recommendation from TMDB data.
+            Choose a genre, time period and recommendation style. Film Finder will suggest
+            a film that fits what you are looking for.
           </p>
         </div>
 
@@ -125,7 +125,7 @@
           </div>
 
           <div class="form-field">
-            <label id="recommendationStyleLabel" for="recommendationStyle">Recommendation style</label>
+            <label id="recommendationStyleLabel" for="recommendationStyle">What are you in the mood for?</label>
 
             <div class="custom-select" data-dropdown-id="recommendationStyle">
               <input type="hidden" name="recommendationStyle" id="recommendationStyle" value="balanced">
@@ -137,25 +137,25 @@
                 aria-expanded="false"
                 aria-labelledby="recommendationStyleLabel recommendationStyleSelectedText"
               >
-                <span id="recommendationStyleSelectedText">Balanced</span>
+                <span id="recommendationStyleSelectedText">Surprise me</span>
                 <span class="custom-select-arrow" aria-hidden="true"></span>
               </button>
 
               <div class="custom-select-menu" role="listbox" aria-label="Recommendation style">
                 <button class="custom-select-option is-selected" type="button" role="option" aria-selected="true" data-value="balanced">
-                  Balanced
+                  Surprise me
                 </button>
                 <button class="custom-select-option" type="button" role="option" aria-selected="false" data-value="quality">
-                  Highly rated
+                  Top-rated picks
                 </button>
                 <button class="custom-select-option" type="button" role="option" aria-selected="false" data-value="popular">
-                  Popular
+                  Crowd-pleasers
                 </button>
                 <button class="custom-select-option" type="button" role="option" aria-selected="false" data-value="hidden-gems">
                   Hidden gems
                 </button>
                 <button class="custom-select-option" type="button" role="option" aria-selected="false" data-value="saved-preferences">
-                  Use saved preferences
+                  Similar to my saved films
                 </button>
               </div>
             </div>
@@ -165,7 +165,7 @@
         </form>
 
         <button id="playBtn" class="primary-action" type="button">
-          Get Recommendation
+          Find a film
         </button>
       </section>
 
@@ -198,7 +198,7 @@
         <div>
           <h2>Saved films</h2>
           <p>
-            Review the films you have shortlisted using persistent browser storage.
+            Keep track of films you are interested in and compare them later.
           </p>
         </div>
 

@@ -197,14 +197,14 @@ const getRecommendationStyle = () => {
 
 const getRecommendationStyleLabel = () => {
   const styleLabels = {
-    balanced: 'Balanced',
-    quality: 'Highly rated',
-    popular: 'Popular',
+    balanced: 'Surprise me',
+    quality: 'Top-rated picks',
+    popular: 'Crowd-pleasers',
     'hidden-gems': 'Hidden gems',
-    'saved-preferences': 'Use saved preferences',
+    'saved-preferences': 'Similar to my saved films',
   };
 
-  return styleLabels[getRecommendationStyle()] || 'Balanced';
+  return styleLabels[getRecommendationStyle()] || 'Surprise me';
 };
 
 const hideDecisionButtons = () => {
@@ -250,7 +250,7 @@ const showLoadingState = () => {
 
   const loadingEyebrow = document.createElement('p');
   loadingEyebrow.className = 'loading-eyebrow';
-  loadingEyebrow.textContent = 'Finding a recommendation';
+  loadingEyebrow.textContent = 'Finding a film for you';
 
   const loadingTitle = document.createElement('div');
   loadingTitle.className = 'skeleton-line skeleton-title';
@@ -284,14 +284,14 @@ const showLoadingState = () => {
 
 const showEmptyState = () => {
   setMovieMessage(
-    'No films found for those filters. Try a wider release period, choose another genre, or use a broader recommendation style.',
+    'No films found for that choice. Try a different genre, a wider time period, or another mood.',
     'status-message'
   );
 };
 
 const showNoNewRecommendationsState = () => {
   setMovieMessage(
-    'You have seen or saved all matching films in this result set. Try a wider release period, choose another genre, or change the recommendation style.',
+    'You have already seen or saved the films that match this choice. Try a wider time period, another genre, or a different mood.',
     'status-message'
   );
 };
@@ -415,7 +415,7 @@ const createMatchPanel = (match) => {
   header.className = 'match-panel-header';
 
   const heading = document.createElement('h3');
-  heading.textContent = 'Why this recommendation?';
+  heading.textContent = 'Why this film?';
 
   const score = document.createElement('span');
   score.className = 'match-score';
@@ -427,7 +427,7 @@ const createMatchPanel = (match) => {
   const settings = document.createElement('p');
   settings.className = 'match-settings';
   settings.textContent =
-  `Mode: ${match.recommendationStyleLabel} · Release period: ${match.releasePeriodLabel}`;
+  `Mood: ${match.recommendationStyleLabel} · Time period: ${match.releasePeriodLabel}`;
 
   const list = document.createElement('ul');
   list.className = 'match-reasons';

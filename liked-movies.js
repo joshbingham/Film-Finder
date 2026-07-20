@@ -241,22 +241,22 @@ const getBestNextWatchReason = (movie) => {
   const reasons = [];
 
   if (getMovieMatchScore(movie) >= 80) {
-    reasons.push('high match score');
+    reasons.push('a strong fit');
   }
 
   if (getMovieRating(movie) >= 7) {
-    reasons.push('strong rating');
+    reasons.push('a strong rating');
   }
 
   if (Array.isArray(movie.match_reasons) && movie.match_reasons.length > 0) {
-    reasons.push('clear recommendation reasons');
+    reasons.push('clear reasons to watch');
   }
 
   if (reasons.length === 0) {
-    return 'Selected as the strongest option from your current shortlist view.';
+    return 'Chosen as the best option from the films currently shown.';
   }
 
-  return `Selected because it has ${reasons.join(', ')}.`;
+  return `Suggested because it has ${reasons.join(', ')}.`;
 };
 
 const updateBestNextWatch = (movies) => {
@@ -323,10 +323,10 @@ const updateInsights = (movies) => {
 
   if (insights.topGenre) {
     preferenceProfileSummary.textContent =
-      `You are currently saving more ${insights.topGenre.name.toLowerCase()} films than anything else. Future recommendations can use this saved pattern to surface more relevant matches.`;
+      `You seem to be saving more ${insights.topGenre.name.toLowerCase()} films than anything else. Film Finder can use this to suggest films that feel closer to your taste.`;
   } else {
     preferenceProfileSummary.textContent =
-      'Save more films to build a clearer preference profile.';
+      'Save a few more films and this section will start to show what you seem to like.';
   }
 
   topGenresList.innerHTML = '';
@@ -335,7 +335,7 @@ const updateInsights = (movies) => {
     const emptyGenreMessage = document.createElement('p');
     emptyGenreMessage.className = 'muted-note';
     emptyGenreMessage.textContent =
-      'Genre data is not available for your saved films yet. Save a few new recommendations to build a stronger profile.';
+      'Save a few more films and your most common genres will appear here.';
 
     topGenresList.appendChild(emptyGenreMessage);
     return;
@@ -456,7 +456,7 @@ const renderEmptyState = () => {
 
   const message = document.createElement('p');
   message.textContent =
-    'Return to Film Finder, generate recommendations, and save films to build your shortlist and preference profile.';
+   'Return to Film Finder, get a few film ideas, and save the ones you might want to watch.';
 
   const link = document.createElement('a');
   link.className = 'primary-action';
@@ -485,7 +485,7 @@ const renderFilteredEmptyState = () => {
 
   const message = document.createElement('p');
   message.textContent =
-    'Try changing the shortlist filter or save more recommendations to expand your comparison set.';
+   'Try changing the filter or saving more films.';
 
   const resetButton = document.createElement('button');
   resetButton.className = 'primary-action';
@@ -520,7 +520,7 @@ const renderSavedMovies = () => {
   const controlledMovies = getControlledSavedMovies(likedMovies, insights);
 
   savedMoviesSummary.textContent =
-    `${likedMovies.length} saved ${likedMovies.length === 1 ? 'film' : 'films'} in your shortlist.`;
+   `${likedMovies.length} saved ${likedMovies.length === 1 ? 'film' : 'films'} ready to compare.`;
 
   clearSavedMoviesBtn.hidden = false;
   savedControlsPanel.hidden = false;
