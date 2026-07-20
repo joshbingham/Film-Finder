@@ -283,7 +283,7 @@ const updateBestNextWatch = (movies) => {
   bestNextWatchReason.textContent = getBestNextWatchReason(bestMovie);
 
   bestNextWatchMeta.textContent =
-    `${formatRating(bestMovie.vote_average)} · ${getMovieMatchScore(bestMovie)}% match · ${formatReleaseYear(bestMovie.release_date)}`;
+    `${formatRating(bestMovie.vote_average)} · ${getMovieMatchScore(bestMovie)}% fit · ${formatReleaseYear(bestMovie.release_date)}`;
 };
 
 const updateInsights = (movies) => {
@@ -297,7 +297,7 @@ const updateInsights = (movies) => {
     strongestMatchInsight.textContent = '—';
 
     preferenceProfileSummary.textContent =
-      'Save films to build a preference profile.';
+      'Save a few films and this section will learn what you like.';
 
     topGenresList.innerHTML = '';
 
@@ -360,7 +360,7 @@ const createSavedMatchPanel = (movie) => {
   if (typeof movie.match_score === 'number') {
     const score = document.createElement('span');
     score.className = 'saved-match-score';
-    score.textContent = `${movie.match_score}% match`;
+    score.textContent = `${movie.match_score}% fit`;
     panel.appendChild(score);
   }
 
