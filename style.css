@@ -53,7 +53,8 @@ a:focus-visible,
 }
 
 button,
-input {
+input,
+select {
   font: inherit;
 }
 
@@ -90,24 +91,6 @@ input {
   margin: 1.25rem auto 0;
   color: var(--text-soft);
   font-size: clamp(1.05rem, 2vw, 1.2rem);
-}
-
-.workflow-steps {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 0.75rem;
-  margin-top: 1.75rem;
-}
-
-.workflow-steps span {
-  color: #BFDBFE;
-  background-color: var(--accent-soft);
-  border: 1px solid rgba(59, 130, 246, 0.25);
-  border-radius: 999px;
-  padding: 0.48rem 0.85rem;
-  font-size: 0.9rem;
-  font-weight: 600;
 }
 
 .app-shell {
@@ -998,7 +981,7 @@ label {
   color: var(--text-muted);
 }
 
-/* Streaming-app visual polish layer */
+/* Final visual layer: streaming-app styling and accessibility refinements */
 
 :root {
   --cinema-amber: #FBBF24;
@@ -1325,13 +1308,11 @@ label {
 .movie-poster img,
 .saved-movie-poster img {
   filter: saturate(1.14) contrast(1.05);
-  transition: transform 0.35s ease, filter 0.35s ease;
 }
 
 .movie-card:hover .movie-poster img,
 .saved-movie-card:hover .saved-movie-poster img {
-  transform: scale(1.025);
-  filter: saturate(1.24) contrast(1.08);
+  filter: saturate(1.14) contrast(1.05);
 }
 
 #movieTitle,
@@ -1537,6 +1518,27 @@ label {
     inset 0 1px 0 rgba(255, 255, 255, 0.06),
     0 18px 42px rgba(0, 0, 0, 0.24),
     0 0 30px rgba(251, 191, 36, 0.08);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .primary-action:hover,
+  .secondary-action:hover,
+  .decision-button:hover,
+  .reaction-button:hover,
+  .saved-movie-card:hover,
+  .movie-card:hover .movie-poster img,
+  .saved-movie-card:hover .saved-movie-poster img {
+    transform: none;
+  }
 }
 
 @media (max-width: 768px) {
