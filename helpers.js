@@ -207,14 +207,40 @@ const getRecommendationStyleLabel = () => {
   return styleLabels[getRecommendationStyle()] || 'Surprise me';
 };
 
+const hideSeenFeedbackPanel = () => {
+  const panel = document.getElementById('seenFeedbackPanel');
+
+  if (panel) {
+    panel.setAttribute('hidden', '');
+  }
+};
+
+const showSeenFeedbackPanel = () => {
+  const panel = document.getElementById('seenFeedbackPanel');
+
+  if (panel) {
+    panel.removeAttribute('hidden');
+  }
+};
+
 const hideDecisionButtons = () => {
   const btnDiv = document.getElementById('likeOrDislikeBtns');
-  btnDiv.setAttribute('hidden', '');
+
+  if (btnDiv) {
+    btnDiv.setAttribute('hidden', '');
+  }
+
+  hideSeenFeedbackPanel();
 };
 
 const showBtns = () => {
   const btnDiv = document.getElementById('likeOrDislikeBtns');
-  btnDiv.removeAttribute('hidden');
+
+  if (btnDiv) {
+    btnDiv.removeAttribute('hidden');
+  }
+
+  hideSeenFeedbackPanel();
 };
 
 const setMovieMessage = (message, className = 'status-message') => {
@@ -311,7 +337,7 @@ const clearCurrentMovie = () => {
   movieTextDiv.innerHTML = '';
 };
 
-const likeMovie = () => {
+const saveMovieForLater = () => {
   if (!currentMovie) {
     return;
   }
@@ -326,7 +352,30 @@ const likeMovie = () => {
   showRandomMovie();
 };
 
-const dislikeMovie = () => {
+const showSeenOptions = () => {
+  if (!currentMovie) {
+    return;
+  }
+
+  showSeenFeedbackPanel();
+};
+
+const saveSeenReaction = (reaction) => {
+  if (!currentMovie) {
+    return;
+  }
+
+  const ratedMovies = getRatedMovies();
+  const updatedRatedMovies = [
+    formatMovieForTasteProfile(currentMovie, reaction),
+    ...ratedMovies.filter((movie) => String(movie.id) !== String(currentMovie.id)),
+  ];
+
+  saveRatedMovies(updatedRatedMovies);
+  showRandomMovie();
+};
+
+const tryAnotherMovie = () => {
   showRandomMovie();
 };
 
@@ -449,7 +498,13 @@ const displayMovie = (movieInfo) => {
   const moviePosterDiv = document.getElementById('moviePoster');
   const movieTextDiv = document.getElementById('movieText');
   const likeBtn = document.getElementById('likeBtn');
+  const seenBtn = document.getElementById('seenBtn');
   const dislikeBtn = document.getElementById('dislikeBtn');
+
+  const loveSeenBtn = document.getElementById('loveSeenBtn');
+  const likeSeenBtn = document.getElementById('likeSeenBtn');
+  const notForMeBtn = document.getElementById('notForMeBtn');
+  const cancelSeenBtn = document.getElementById('cancelSeenBtn');
 
   const moviePoster = createMoviePoster(movieInfo.poster_path, movieInfo.title);
   const titleHeader = createMovieTitle(movieInfo.title);
@@ -471,8 +526,14 @@ const displayMovie = (movieInfo) => {
 
   showBtns();
 
-  likeBtn.onclick = likeMovie;
-  dislikeBtn.onclick = dislikeMovie;
+  likeBtn.onclick = saveMovieForLater;
+  seenBtn.onclick = showSeenOptions;
+  dislikeBtn.onclick = tryAnotherMovie;
+
+  loveSeenBtn.onclick = () => saveSeenReaction('loved');
+  likeSeenBtn.onclick = () => saveSeenReaction('liked');
+  notForMeBtn.onclick = () => saveSeenReaction('not-for-me');
+  cancelSeenBtn.onclick = hideSeenFeedbackPanel;
 };
 
 const getLikedMovies = () => {
@@ -482,6 +543,20 @@ const getLikedMovies = () => {
 
 const saveLikedMovies = (movies) => {
   localStorage.setItem('likedMovies', JSON.stringify(movies));
+};
+
+const getRatedMovies = () => {
+  try {
+    const rated = localStorage.getItem('ratedMovies');
+    return rated ? JSON.parse(rated) : [];
+  } catch (error) {
+    console.error('Unable to read rated movies:', error);
+    return [];
+  }
+};
+
+const saveRatedMovies = (movies) => {
+  localStorage.setItem('ratedMovies', JSON.stringify(movies));
 };
 
 const formatMovieForStorage = (movie) => ({
@@ -499,6 +574,24 @@ const formatMovieForStorage = (movie) => ({
   release_period: movie.match?.releasePeriod ?? null,
   release_period_label: movie.match?.releasePeriodLabel ?? null,
   saved_at: new Date().toISOString(),
+});
+
+const formatMovieForTasteProfile = (movie, reaction) => ({
+  id: movie.id,
+  title: movie.title,
+  poster_path: movie.poster_path,
+  overview: movie.overview,
+  release_date: movie.release_date,
+  vote_average: movie.vote_average,
+  genre_ids: Array.isArray(movie.genre_ids) ? movie.genre_ids : [],
+  match_score: movie.match?.score ?? null,
+  match_reasons: movie.match?.reasons ?? [],
+  recommendation_style: movie.match?.recommendationStyle ?? null,
+  recommendation_style_label: movie.match?.recommendationStyleLabel ?? null,
+  release_period: movie.match?.releasePeriod ?? null,
+  release_period_label: movie.match?.releasePeriodLabel ?? null,
+  reaction,
+  rated_at: new Date().toISOString(),
 });
 
 document.addEventListener('DOMContentLoaded', initialiseCustomDropdowns);

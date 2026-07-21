@@ -183,14 +183,44 @@
 
         <div id="likeOrDislikeBtns" class="decision-actions" hidden>
           <button id="likeBtn" class="decision-button save" type="button">
-            <i class="fa-solid fa-thumbs-up"></i>
+            <i class="fa-solid fa-bookmark"></i>
             Save for later
           </button>
 
+          <button id="seenBtn" class="decision-button seen" type="button">
+            <i class="fa-solid fa-eye"></i>
+            I’ve seen this
+          </button>
+
           <button id="dislikeBtn" class="decision-button skip" type="button">
-            <i class="fa-solid fa-thumbs-down"></i>
+            <i class="fa-solid fa-rotate-right"></i>
             Try another
           </button>
+        </div>
+
+        <div id="seenFeedbackPanel" class="seen-feedback-panel" hidden>
+          <p>What did you think of it?</p>
+
+          <div class="reaction-actions">
+            <button id="loveSeenBtn" class="reaction-button love" type="button">
+              <i class="fa-solid fa-heart"></i>
+              Loved it
+            </button>
+
+            <button id="likeSeenBtn" class="reaction-button like" type="button">
+              <i class="fa-solid fa-thumbs-up"></i>
+              Liked it
+            </button>
+
+            <button id="notForMeBtn" class="reaction-button not-for-me" type="button">
+              <i class="fa-solid fa-thumbs-down"></i>
+              Not for me
+            </button>
+
+            <button id="cancelSeenBtn" class="reaction-button cancel" type="button">
+              Cancel
+            </button>
+          </div>
         </div>
       </section>
 
