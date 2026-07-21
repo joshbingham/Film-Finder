@@ -2,11 +2,11 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Film Finder | Data-Driven Movie Discovery</title>
+    <title>Film Finder | Taste-Based Movie Recommendations</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta
       name="description"
-      content="A data-driven movie discovery tool using filters, recommendations, and saved preferences."
+      content="Discover films by mood, genre and era with a lightweight taste profile and watchlist."
     >
 
     <link rel="stylesheet" href="style.css">
@@ -17,6 +17,7 @@
   </head>
 
   <body>
+    <a class="skip-link" href="#main-content">Skip to main content</a>
     <header class="app-header">
       <p class="eyebrow">Movie discovery made easier</p>
 
@@ -29,7 +30,7 @@
 
     </header>
 
-    <main class="app-shell">
+    <main id="main-content" class="app-shell">
       <section class="controls-card" aria-labelledby="controls-heading">
         <div class="section-heading">
           <h2 id="controls-heading">Find something to watch</h2>
@@ -231,5 +232,11 @@
         </a>
       </section>
     </main>
+
+    <footer class="app-footer">
+      <p>
+        Movie data is fetched from TMDB for this portfolio project.
+      </p>
+    </footer>
   </body>
 </html>
