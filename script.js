@@ -80,10 +80,10 @@ const getMovieInfo = async (movie) => {
   }
 };
 
-const getSavedGenreIds = () => {
+const getGenreTasteScores = () => {
   const likedMovies = getLikedMovies();
   const ratedMovies = getRatedMovies();
-  const genreCounts = {};
+  const genreTasteScores = {};
 
   const addMovieGenres = (movie, weight) => {
     if (!Array.isArray(movie.genre_ids)) {
@@ -91,7 +91,7 @@ const getSavedGenreIds = () => {
     }
 
     movie.genre_ids.forEach((genreId) => {
-      genreCounts[genreId] = (genreCounts[genreId] || 0) + weight;
+      genreTasteScores[genreId] = (genreTasteScores[genreId] || 0) + weight;
     });
   };
 
@@ -107,29 +107,27 @@ const getSavedGenreIds = () => {
     if (movie.reaction === 'liked') {
       addMovieGenres(movie, 2);
     }
+
+    if (movie.reaction === 'not-for-me') {
+      addMovieGenres(movie, -1);
+    }
   });
 
-  return Object.entries(genreCounts)
-    .filter(([, count]) => count > 0)
-    .sort((a, b) => b[1] - a[1])
-    .map(([genreId]) => Number(genreId));
+  return genreTasteScores;
 };
 
-const getNotForMeGenreIds = () => {
-  const ratedMovies = getRatedMovies();
-  const notForMeGenreIds = new Set();
+const getMovieTasteScore = (movie, genreTasteScores) => {
+  if (!Array.isArray(movie.genre_ids)) {
+    return 0;
+  }
 
-  ratedMovies.forEach((movie) => {
-    if (movie.reaction !== 'not-for-me' || !Array.isArray(movie.genre_ids)) {
-      return;
-    }
+  return movie.genre_ids.reduce((total, genreId) => {
+    return total + (genreTasteScores[genreId] || 0);
+  }, 0);
+};
 
-    movie.genre_ids.forEach((genreId) => {
-      notForMeGenreIds.add(Number(genreId));
-    });
-  });
-
-  return [...notForMeGenreIds];
+const hasTasteProfile = (genreTasteScores) => {
+  return Object.keys(genreTasteScores).length > 0;
 };
 
 const addMatchReason = (reasons, reason) => {
@@ -196,22 +194,20 @@ const calculateMatchInsights = (movie) => {
   const releasePeriodLabel = getReleasePeriodLabel();
   const recommendationStyle = getRecommendationStyle();
   const recommendationStyleLabel = getRecommendationStyleLabel();
-  const savedGenreIds = getSavedGenreIds();
-  const notForMeGenreIds = getNotForMeGenreIds();
+  const genreTasteScores = getGenreTasteScores();
+  const movieTasteScore = getMovieTasteScore(movie, genreTasteScores);
+  const hasAnyTasteProfile = hasTasteProfile(genreTasteScores);
+  const hasPositiveTasteMatch = movieTasteScore > 0;
+  const hasStrongTasteMatch = movieTasteScore >= 4;
+  const hasRepeatedNegativeTasteSignal = movieTasteScore <= -3;
 
   let score = 35;
   const reasons = [];
 
-  const hasSavedPreferenceMatch = savedGenreIds.some((genreId) => {
-    return Array.isArray(movie.genre_ids) && movie.genre_ids.includes(genreId);
-  });
-
-  const hasNotForMeGenreMatch = notForMeGenreIds.some((genreId) => {
-  return Array.isArray(movie.genre_ids) && movie.genre_ids.includes(genreId);
-  });
-
-  if (hasNotForMeGenreMatch) {
-    score -= 18;
+  if (hasRepeatedNegativeTasteSignal) {
+    score -= 8;
+  } else if (movieTasteScore < 0) {
+    score -= 2;
   }
 
   if (
@@ -271,8 +267,11 @@ const calculateMatchInsights = (movie) => {
       }
     }
 
-    if (hasSavedPreferenceMatch) {
-      score += 12;
+    if (hasStrongTasteMatch) {
+      score += 16;
+      addMatchReason(reasons, 'Strongly lines up with films you have saved, liked or loved.');
+    } else if (hasPositiveTasteMatch) {
+      score += 10;
       addMatchReason(reasons, 'Similar to films you have saved, liked or loved.');
     }
   }
@@ -298,7 +297,10 @@ const calculateMatchInsights = (movie) => {
       addMatchReason(reasons, 'The rating is backed by a useful number of viewers.');
     }
 
-    if (hasSavedPreferenceMatch) {
+    if (hasStrongTasteMatch) {
+      score += 12;
+      addMatchReason(reasons, 'Also strongly matches your taste so far.');
+    } else if (hasPositiveTasteMatch) {
       score += 8;
       addMatchReason(reasons, 'Also similar to films you have saved, liked or loved.');
     }
@@ -325,7 +327,10 @@ const calculateMatchInsights = (movie) => {
       addMatchReason(reasons, 'Popular with viewers and still well rated.');
     }
 
-    if (hasSavedPreferenceMatch) {
+    if (hasStrongTasteMatch) {
+      score += 12;
+      addMatchReason(reasons, 'Also strongly matches your taste so far.');
+    } else if (hasPositiveTasteMatch) {
       score += 8;
       addMatchReason(reasons, 'Also similar to films you have saved, liked or loved.');
     }
@@ -353,8 +358,11 @@ const calculateMatchInsights = (movie) => {
       }
     }
 
-    if (hasSavedPreferenceMatch) {
-      score += 10;
+    if (hasStrongTasteMatch) {
+      score += 14;
+      addMatchReason(reasons, 'A less obvious pick that still lines up with your taste.');
+    } else if (hasPositiveTasteMatch) {
+      score += 9;
       addMatchReason(reasons, 'Still similar to films you have saved, liked or loved.');
     }
   }
@@ -365,14 +373,23 @@ const calculateMatchInsights = (movie) => {
       'This uses the kinds of films you have saved, liked or loved.'
     );
 
-    if (hasSavedPreferenceMatch) {
+    if (hasStrongTasteMatch) {
       score += 34;
+      addMatchReason(reasons, 'Strongly reflects films you have liked, loved or saved.');
+    } else if (hasPositiveTasteMatch) {
+      score += 24;
       addMatchReason(reasons, 'Similar to films you have liked, loved or saved.');
-    } else if (savedGenreIds.length === 0) {
+    } else if (!hasAnyTasteProfile) {
       score += 8;
       addMatchReason(
         reasons,
         'Save or rate more films and this option will get more personal over time.'
+      );
+    } else if (hasRepeatedNegativeTasteSignal) {
+      score -= 8;
+      addMatchReason(
+        reasons,
+        'Less aligned with the taste profile you are building.'
       );
     }
 
