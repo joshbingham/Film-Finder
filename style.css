@@ -44,6 +44,14 @@ a:hover {
   text-decoration: underline;
 }
 
+button:focus-visible,
+a:focus-visible,
+.custom-select-trigger:focus-visible,
+.saved-control-select:focus-visible {
+  outline: 3px solid #FBBF24;
+  outline-offset: 4px;
+}
+
 button,
 input {
   font: inherit;
@@ -1273,13 +1281,14 @@ label {
 
 .primary-action {
   background:
-    linear-gradient(135deg, #FDE68A 0%, #FBBF24 48%, #F97316 100%);
+    linear-gradient(135deg, #FEF3C7 0%, #FBBF24 48%, #F97316 100%);
   color: #111827;
-  border: 1px solid rgba(253, 230, 138, 0.65);
+  border: 1px solid rgba(254, 243, 199, 0.85);
   box-shadow:
-    0 16px 34px rgba(249, 115, 22, 0.22),
-    0 0 34px rgba(251, 191, 36, 0.14);
+    0 16px 34px rgba(249, 115, 22, 0.24),
+    0 0 34px rgba(251, 191, 36, 0.16);
   text-shadow: none;
+  font-weight: 900;
 }
 
 .primary-action:hover {
@@ -1359,12 +1368,11 @@ label {
 .saved-match-score,
 .best-next-watch-meta {
   color: #FFFFFF;
-  background:
-    linear-gradient(135deg, #F59E0B 0%, #EC4899 48%, #3B82F6 100%);
-  border: 0;
+  background: rgba(2, 6, 23, 0.92);
+  border: 1px solid rgba(251, 191, 36, 0.48);
   box-shadow:
-    0 10px 24px rgba(236, 72, 153, 0.22),
-    0 0 24px rgba(56, 189, 248, 0.12);
+    0 10px 24px rgba(0, 0, 0, 0.24),
+    0 0 24px rgba(251, 191, 36, 0.12);
 }
 
 .match-settings {
@@ -1535,7 +1543,12 @@ label {
   }
 
   .movie-poster img {
-    max-height: none;
+    max-height: 420px;
+    object-fit: cover;
+  }
+
+  .movie-text {
+    padding: 1.25rem;
   }
 
   .saved-link-card {
