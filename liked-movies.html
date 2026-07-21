@@ -2,11 +2,11 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8">
-    <title>Saved Films | Film Finder</title>
+    <title>Watchlist | Film Finder</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta
       name="description"
-      content="Review saved Film Finder recommendations and view preference insights."
+      content="Review your Film Finder watchlist, compare recommendations and view taste insights."
     >
 
     <link rel="stylesheet" href="style.css">
@@ -18,10 +18,10 @@
     <header class="app-header saved-header">
       <p class="eyebrow">Your watchlist</p>
 
-      <h1>Saved Films</h1>
+      <h1>Watchlist</h1>
 
       <p class="hero-copy">
-        Compare the films you have saved and choose what to watch next.
+        Compare the films on your watchlist, review your taste insights and choose what to watch next.
       </p>
 
       <a class="back-link" href="index.html">
@@ -33,20 +33,20 @@
     <main class="app-shell saved-page-shell">
       <section class="saved-page-summary">
         <div>
-          <h2>Your shortlist</h2>
+          <h2>Your watchlist</h2>
           <p id="savedMoviesSummary">
-            Saved films will appear here after you add them.
+            Films will appear here after you add them to your watchlist.
           </p>
         </div>
 
         <button id="clearSavedMoviesBtn" class="secondary-action danger-action" type="button" hidden>
-          Clear all
+          Clear watchlist
         </button>
       </section>
 
       <section id="savedInsightsPanel" class="saved-insights-panel" hidden>
         <div class="insight-card">
-          <span class="insight-label">Saved films</span>
+          <span class="insight-label">Watchlist films</span>
           <strong id="savedCountInsight">0</strong>
         </div>
 
@@ -61,7 +61,7 @@
         </div>
 
         <div class="insight-card">
-          <span class="insight-label">Strongest match</span>
+          <span class="insight-label">Best fit</span>
           <strong id="strongestMatchInsight">—</strong>
         </div>
       </section>
@@ -71,7 +71,7 @@
             <p class="eyebrow panel-eyebrow">Your taste so far</p>
             <h2>What you seem to like</h2>
             <p id="preferenceProfileSummary">
-            Save films to build a preference profile.
+            Add films to your watchlist to start building your taste profile.
             </p>
         </div>
 
@@ -81,9 +81,9 @@
         <section id="bestNextWatchPanel" class="best-next-watch-panel" hidden>
         <div>
             <p class="eyebrow panel-eyebrow">Best next watch</p>
-            <h2 id="bestNextWatchTitle">Your best saved option will appear here.</h2>
+            <h2 id="bestNextWatchTitle">Your best watchlist option will appear here.</h2>
             <p id="bestNextWatchReason">
-            Save films to compare your shortlist.
+            Add films to your watchlist to compare your options.
             </p>
         </div>
 
@@ -92,7 +92,7 @@
 
         <section id="savedControlsPanel" class="saved-controls-panel" hidden>
         <div class="saved-control-field">
-            <label for="savedSort">Sort saved films</label>
+            <label for="savedSort">Sort watchlist</label>
             <select id="savedSort" class="saved-control-select">
             <option value="saved-desc">Recently saved</option>
             <option value="match-desc">Best fit</option>
@@ -105,7 +105,7 @@
         <div class="saved-control-field">
             <label for="savedFilter">Show</label>
             <select id="savedFilter" class="saved-control-select">
-            <option value="all">All saved films</option>
+            <option value="all">All watchlist films</option>
             <option value="top-genre">Most saved genre</option>
             <option value="rating-7">7+ rating</option>
             <option value="match-80">Best fit 80%+</option>

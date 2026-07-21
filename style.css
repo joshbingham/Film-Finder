@@ -1524,6 +1524,21 @@ label {
   color: #F8FAFC;
 }
 
+.best-next-watch-panel {
+  border-color: rgba(251, 191, 36, 0.38);
+  background:
+    linear-gradient(
+      135deg,
+      rgba(251, 191, 36, 0.12),
+      rgba(15, 23, 42, 0.96),
+      rgba(56, 189, 248, 0.1)
+    );
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.06),
+    0 18px 42px rgba(0, 0, 0, 0.24),
+    0 0 30px rgba(251, 191, 36, 0.08);
+}
+
 @media (max-width: 768px) {
   body {
     padding: 1rem;

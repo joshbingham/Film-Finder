@@ -262,8 +262,8 @@ const getBestNextWatchReason = (movie) => {
 const updateBestNextWatch = (movies) => {
   if (movies.length === 0) {
     bestNextWatchPanel.hidden = true;
-    bestNextWatchTitle.textContent = 'Your strongest saved option will appear here.';
-    bestNextWatchReason.textContent = 'Save films to compare your shortlist.';
+    bestNextWatchTitle.textContent = 'Your best watchlist option will appear here.';
+    bestNextWatchReason.textContent = 'Add films to your watchlist to compare your options.';
     bestNextWatchMeta.textContent = '—';
     return;
   }
@@ -297,7 +297,7 @@ const updateInsights = (movies) => {
     strongestMatchInsight.textContent = '—';
 
     preferenceProfileSummary.textContent =
-      'Save a few films and this section will learn what you like.';
+      'Add a few films to your watchlist and this section will start to learn what you like.';
 
     topGenresList.innerHTML = '';
 
@@ -323,10 +323,10 @@ const updateInsights = (movies) => {
 
   if (insights.topGenre) {
     preferenceProfileSummary.textContent =
-      `You seem to be saving more ${insights.topGenre.name.toLowerCase()} films than anything else. Film Finder can use this to suggest films that feel closer to your taste.`;
+      `Your watchlist currently leans toward ${insights.topGenre.name.toLowerCase()} films. Film Finder can use this to suggest films that feel closer to your taste.`;
   } else {
     preferenceProfileSummary.textContent =
-      'Save a few more films and this section will start to show what you seem to like.';
+      'Add a few more films to your watchlist and this section will start to show what you seem to like.';
   }
 
   topGenresList.innerHTML = '';
@@ -335,7 +335,7 @@ const updateInsights = (movies) => {
     const emptyGenreMessage = document.createElement('p');
     emptyGenreMessage.className = 'muted-note';
     emptyGenreMessage.textContent =
-      'Save a few more films and your most common genres will appear here.';
+      'Add a few more films to your watchlist and your most common genres will appear here.';
 
     topGenresList.appendChild(emptyGenreMessage);
     return;
@@ -414,7 +414,7 @@ const createSavedMovieCard = (movie) => {
 
   const savedMeta = document.createElement('p');
   savedMeta.className = 'saved-date-meta';
-  savedMeta.textContent = savedDate ? `Saved ${savedDate}` : 'Saved to shortlist';
+  savedMeta.textContent = savedDate ? `Saved ${savedDate}` : 'Saved to watchlist';
 
   const matchPanel = createSavedMatchPanel(movie);
 
@@ -452,7 +452,7 @@ const renderEmptyState = () => {
   emptyState.className = 'saved-empty-state';
 
   const heading = document.createElement('h2');
-  heading.textContent = 'No saved films yet';
+  heading.textContent = 'Your watchlist is empty';
 
   const message = document.createElement('p');
   message.textContent =
@@ -469,7 +469,7 @@ const renderEmptyState = () => {
 
   likedMoviesContainer.appendChild(emptyState);
 
-  savedMoviesSummary.textContent = 'Saved films will appear here after you add them.';
+  savedMoviesSummary.textContent = 'Films will appear here after you add them to your watchlist.';
   clearSavedMoviesBtn.hidden = true;
   updateInsights([]);
 };
@@ -485,12 +485,12 @@ const renderFilteredEmptyState = () => {
 
   const message = document.createElement('p');
   message.textContent =
-   'Try changing the filter or saving more films.';
+   'Try changing the filter or adding more films to your watchlist.';
 
   const resetButton = document.createElement('button');
   resetButton.className = 'primary-action';
   resetButton.type = 'button';
-  resetButton.textContent = 'Show all saved films';
+  resetButton.textContent = 'Show all watchlist films';
 
   resetButton.addEventListener('click', () => {
     savedFilter.value = 'all';
@@ -520,7 +520,7 @@ const renderSavedMovies = () => {
   const controlledMovies = getControlledSavedMovies(likedMovies, insights);
 
   savedMoviesSummary.textContent =
-   `${likedMovies.length} saved ${likedMovies.length === 1 ? 'film' : 'films'} ready to compare.`;
+    `${likedMovies.length} ${likedMovies.length === 1 ? 'film' : 'films'} in your watchlist, ready to compare.`;
 
   clearSavedMoviesBtn.hidden = false;
   savedControlsPanel.hidden = false;
@@ -558,7 +558,7 @@ likedMoviesContainer.addEventListener('click', (event) => {
 });
 
 clearSavedMoviesBtn.addEventListener('click', () => {
-  const confirmed = window.confirm('Clear all saved films from your shortlist?');
+  const confirmed = window.confirm('Clear all films from your watchlist?');
 
   if (!confirmed) {
     return;

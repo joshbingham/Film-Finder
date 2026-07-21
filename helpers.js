@@ -201,7 +201,7 @@ const getRecommendationStyleLabel = () => {
     quality: 'Top-rated picks',
     popular: 'Crowd-pleasers',
     'hidden-gems': 'Hidden gems',
-    'saved-preferences': 'Similar to my saved films',
+    'saved-preferences': 'Based on my taste',
   };
 
   return styleLabels[getRecommendationStyle()] || 'Surprise me';
