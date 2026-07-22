@@ -64,6 +64,12 @@ The main focus areas were:
 - Creating a watchlist experience with useful insights
 - Improving accessibility through focus states, keyboard support and reduced-motion handling
 
+## Attribution
+
+This product uses the TMDB API but is not endorsed or certified by TMDB.
+
+Movie metadata and images are provided by The Movie Database.
+
 ## Running locally
 
 This project uses Vercel serverless functions, so it should be run with Vercel's local development server.
