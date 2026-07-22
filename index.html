@@ -1,49 +1,248 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Film Finder</title>
+    <title>Film Finder | Taste-Based Movie Recommendations</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400&family=Fredoka+One&family=Questrial&family=Staatliches&display=swap" rel="stylesheet">
+    <meta
+      name="description"
+      content="Discover films by mood, genre and era with a lightweight taste profile and watchlist."
+    >
+
     <link rel="stylesheet" href="style.css">
+
     <script defer src="https://kit.fontawesome.com/e918d10e90.js" crossorigin="anonymous"></script>
-    <!-- <script defer src="public/config.js"></script> -->
     <script defer src="helpers.js"></script>
     <script defer src="script.js"></script>
   </head>
+
   <body>
-    <header>
-      <h1>🍿Film Finder🍿</h1>
+    <a class="skip-link" href="#main-content">Skip to main content</a>
+    <header class="app-header">
+      <p class="eyebrow">Movie discovery made easier</p>
+
+      <h1>Film Finder</h1>
+
+      <p class="hero-copy">
+        Find a film that fits your mood, favourite eras and the films you already love.
+        Save ideas to your watchlist, or rate films you have seen so Film Finder gets smarter over time.
+      </p>
+
     </header>
-    <form id="genreForm">
-      <label>Choose a genre:</label>
-      <select name="genres" id="genres">
-      </select>
 
-      <label>Release window:</label>
-      <select name="dateFilter" id="dateFilter">
-        <option value="random">Any time (random)</option>
-        <option value="7">Last week</option>
-        <option value="30">Last month</option>
-        <option value="90">Last 3 months</option>
-        <option value="180">Last 6 months</option>
-        <option value="365">Last year</option>
-      </select>
-    </form>
+    <main id="main-content" class="app-shell">
+      <section class="controls-card" aria-labelledby="controls-heading">
+        <div class="section-heading">
+          <h2 id="controls-heading">Find something to watch</h2>
+          <p>
+            Choose a genre, time period and recommendation style. Film Finder will suggest
+            a film that fits what you are looking for.
+          </p>
+        </div>
 
-    <button id="playBtn">Let's Play!</button>
+        <form id="genreForm" class="filter-form">
+          <div class="form-field">
+            <label id="genreLabel" for="genres">Genre</label>
 
-    <div id="movieInfo">
-      <div id="moviePoster"></div>
-      <div id="movieText"></div>
-    </div>
-    <div id="likeOrDislikeBtns" hidden>
-      <button id="likeBtn"><i class="fa-solid fa-thumbs-up"></i></button>
-      <button id="dislikeBtn"><i class="fa-solid fa-thumbs-down"></i></button>
-    </div>
-    <!-- Liked Movies link -->
-    <a href="liked-movies.html">❤️ View Liked Movies</a>
+            <div class="custom-select is-disabled" data-dropdown-id="genres">
+              <input type="hidden" name="genres" id="genres" value="">
+
+              <button
+                class="custom-select-trigger"
+                type="button"
+                aria-haspopup="listbox"
+                aria-expanded="false"
+                aria-labelledby="genreLabel genresSelectedText"
+              >
+                <span id="genresSelectedText">Loading genres...</span>
+                <span class="custom-select-arrow" aria-hidden="true"></span>
+              </button>
+
+              <div class="custom-select-menu" role="listbox" aria-label="Genre">
+                <button
+                  class="custom-select-option is-selected"
+                  type="button"
+                  role="option"
+                  aria-selected="true"
+                  data-value=""
+                >
+                  Loading genres...
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-field">
+            <label id="releasePeriodLabel" for="releasePeriod">Time period</label>
+              <div class="custom-select" data-dropdown-id="releasePeriod">
+              <input type="hidden" name="releasePeriod" id="releasePeriod" value="any">
+
+              <button
+                class="custom-select-trigger"
+                type="button"
+                aria-haspopup="listbox"
+                aria-expanded="false"
+                aria-labelledby="releasePeriodLabel releasePeriodSelectedText"
+              >
+                <span id="releasePeriodSelectedText">Any release date</span>
+                <span class="custom-select-arrow" aria-hidden="true"></span>
+              </button>
+
+              <div class="custom-select-menu" role="listbox" aria-label="Release period">
+                <button class="custom-select-option is-selected" type="button" role="option" aria-selected="true" data-value="any">
+                  Any release date
+                </button>
+                <button class="custom-select-option" type="button" role="option" aria-selected="false" data-value="recent-90">
+                  Recent releases
+                </button>
+                <button class="custom-select-option" type="button" role="option" aria-selected="false" data-value="last-year">
+                  Last year
+                </button>
+                <button class="custom-select-option" type="button" role="option" aria-selected="false" data-value="2020s">
+                  2020s
+                </button>
+                <button class="custom-select-option" type="button" role="option" aria-selected="false" data-value="2010s">
+                  2010s
+                </button>
+                <button class="custom-select-option" type="button" role="option" aria-selected="false" data-value="2000s">
+                  2000s
+                </button>
+                <button class="custom-select-option" type="button" role="option" aria-selected="false" data-value="1990s">
+                  1990s
+                </button>
+                <button class="custom-select-option" type="button" role="option" aria-selected="false" data-value="1980s">
+                  1980s
+                </button>
+                <button class="custom-select-option" type="button" role="option" aria-selected="false" data-value="classic">
+                  Classic films
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-field">
+            <label id="recommendationStyleLabel" for="recommendationStyle">What are you in the mood for?</label>
+
+            <div class="custom-select" data-dropdown-id="recommendationStyle">
+              <input type="hidden" name="recommendationStyle" id="recommendationStyle" value="balanced">
+
+              <button
+                class="custom-select-trigger"
+                type="button"
+                aria-haspopup="listbox"
+                aria-expanded="false"
+                aria-labelledby="recommendationStyleLabel recommendationStyleSelectedText"
+              >
+                <span id="recommendationStyleSelectedText">Surprise me</span>
+                <span class="custom-select-arrow" aria-hidden="true"></span>
+              </button>
+
+              <div class="custom-select-menu" role="listbox" aria-label="Recommendation style">
+                <button class="custom-select-option is-selected" type="button" role="option" aria-selected="true" data-value="balanced">
+                  Surprise me
+                </button>
+                <button class="custom-select-option" type="button" role="option" aria-selected="false" data-value="quality">
+                  Top-rated picks
+                </button>
+                <button class="custom-select-option" type="button" role="option" aria-selected="false" data-value="popular">
+                  Crowd-pleasers
+                </button>
+                <button class="custom-select-option" type="button" role="option" aria-selected="false" data-value="hidden-gems">
+                  Hidden gems
+                </button>
+                <button class="custom-select-option" type="button" role="option" aria-selected="false" data-value="saved-preferences">
+                  Based on my taste
+                </button>
+              </div>
+            </div>
+          </div>
+
+          
+        </form>
+
+        <button id="playBtn" class="primary-action" type="button">
+          Find a film
+        </button>
+      </section>
+
+      <section class="movie-panel" aria-live="polite">
+        <div id="movieInfo" class="movie-card">
+          <div id="moviePoster" class="movie-poster"></div>
+
+          <div id="movieText" class="movie-text">
+            <p class="empty-state">
+              Choose a mood, time period and genre to get your first film recommendation.
+            </p>
+          </div>
+        </div>
+
+        <div id="likeOrDislikeBtns" class="decision-actions" hidden>
+          <button id="likeBtn" class="decision-button save" type="button">
+            <i class="fa-solid fa-bookmark"></i>
+            Save to watchlist
+          </button>
+
+          <button id="seenBtn" class="decision-button seen" type="button">
+            <i class="fa-solid fa-eye"></i>
+            I’ve seen this
+          </button>
+
+          <button id="dislikeBtn" class="decision-button skip" type="button">
+            <i class="fa-solid fa-rotate-right"></i>
+            Try another
+          </button>
+        </div>
+
+        <div id="seenFeedbackPanel" class="seen-feedback-panel" hidden>
+          <p>What did you think of it?</p>
+
+          <div class="reaction-actions">
+            <button id="loveSeenBtn" class="reaction-button love" type="button">
+              <i class="fa-solid fa-heart"></i>
+              Loved it
+            </button>
+
+            <button id="likeSeenBtn" class="reaction-button like" type="button">
+              <i class="fa-solid fa-thumbs-up"></i>
+              Liked it
+            </button>
+
+            <button id="notForMeBtn" class="reaction-button not-for-me" type="button">
+              <i class="fa-solid fa-thumbs-down"></i>
+              Not for me
+            </button>
+
+            <button id="cancelSeenBtn" class="reaction-button cancel" type="button">
+              Cancel
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <section class="saved-link-card">
+        <div>
+          <h2>Your watchlist</h2>
+          <p>
+            Keep track of films you are interested in and choose what to watch next.
+          </p>
+        </div>
+
+        <a class="secondary-action" href="liked-movies.html">
+          View Watchlist
+        </a>
+      </section>
+    </main>
+
+    <footer class="app-footer">
+      <p>
+        This product uses the TMDB API but is not endorsed or certified by TMDB.
+      </p>
+      <p>
+        Movie metadata and images are provided by
+        <a href="https://www.themoviedb.org/" target="_blank" rel="noreferrer">
+          The Movie Database
+        </a>.
+      </p>
+    </footer>
   </body>
 </html>
