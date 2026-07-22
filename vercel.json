@@ -4,7 +4,7 @@
   "rewrites": [
     {
       "source": "/watchlist",
-      "destination": "/liked-movies.html"
+      "destination": "/liked-movies"
     }
   ]
 }
