@@ -4,6 +4,8 @@ Film Finder is a movie discovery app that helps users find something to watch ba
 
 It uses the TMDB API to fetch film data, then applies custom recommendation scoring to suggest films that match the user's choices and saved preferences.
 
+[Live app](https://film-finder-khaki.vercel.app/) · [Portfolio](https://joshbingham.dev/)
+
 ## Features
 
 - Discover films by genre, time period and recommendation style
